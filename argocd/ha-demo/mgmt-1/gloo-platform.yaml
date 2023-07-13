@@ -22,6 +22,8 @@ spec:
           enabled: false
         glooMgmtServer:
           enabled: true
+          licensing:
+            licenseSecretName: license-keys
           env:
           - name: REDIS_USERNAME
             value: ""

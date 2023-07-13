@@ -153,4 +153,11 @@ kubectl create secret generic redis-config --context mgmt-2 \
   --namespace gloo-mesh \
   --from-literal=token="${TF_VAR_redis_auth}" \
   --from-literal=host="`terraform output --json | jq -r '."redis-secondary-us-east-2".value.host'`"
+
+# gloo license secrets
+
+kubectl create secret generic license-keys --context mgmt-1 \
+  --namespace gloo-mesh \
+  --from-literal=gloo-trial-license-key=${LICENSE_KEY}
 ```
+
