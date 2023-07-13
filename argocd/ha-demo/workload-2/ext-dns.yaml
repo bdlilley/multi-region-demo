@@ -36,7 +36,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: external-dns
-    namespace: default # change to desired namespace: externaldns, kube-addons
+    namespace: kube-system # change to desired namespace: externaldns, kube-addons
 ---
 apiVersion: apps/v1
 kind: Deployment
