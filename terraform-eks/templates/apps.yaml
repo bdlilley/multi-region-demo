@@ -1,0 +1,88 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-load-balancer-controller
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://aws.github.io/eks-charts
+    targetRevision: "1.4.5"
+    chart: aws-load-balancer-controller
+    helm:
+      values: |
+        replicaCount: 1
+        clusterName: ${cluster-name}
+        serviceAccount:
+          create: true
+          name: aws-load-balancer-controller
+          annotations:
+            eks.amazonaws.com/role-arn: ${ aws-lb-controller-role-arn }
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system  
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-secrets
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://charts.external-secrets.io
+    targetRevision: "0.7.2"
+    chart: external-secrets
+    helm:
+      values: |
+        serviceAccount:
+          create: true
+          name: external-secrets
+          annotations:
+            eks.amazonaws.com/role-arn: ${ ext-secrets-role-arn }
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system  
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://charts.jetstack.io
+    targetRevision: v1.9.1
+    chart: cert-manager
+    helm:
+      values: |
+        installCRDs: true
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system  
