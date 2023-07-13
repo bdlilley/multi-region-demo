@@ -97,7 +97,7 @@ spec:
         prometheus:
           enabled: true
         redis:
-          address: master.ha-demo-primary.cc3vei.use1.cache.amazonaws.com:6379
+          address: master.ha-demo-secondary.sh5gsi.use2.cache.amazonaws.com:6379
           auth:
             enabled: true
           certs:
@@ -111,19 +111,10 @@ spec:
           config:
             exporters:
               otlp:
-                endpoint: gloo-telemetry-gateway.gloo-mesh:4317
+                endpoint: otel.ha-demo.vpc:4317
           enabled: true
         telemetryGateway:
-          enabled: true
-          service:
-            annotations:
-              external-dns.alpha.kubernetes.io/hostname: otel.ha-demo.vpc
-              service.beta.kubernetes.io/aws-load-balancer-backend-protocol: TCP
-              service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-              service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
-              service.beta.kubernetes.io/aws-load-balancer-scheme: internal
-              service.beta.kubernetes.io/aws-load-balancer-type: external
-            type: LoadBalancer
+          enabled: false
         global:
           common:
             cluster: mgmt-cluster
