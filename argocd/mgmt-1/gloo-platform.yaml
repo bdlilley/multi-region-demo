@@ -35,9 +35,6 @@ spec:
             pushRbac: true
             tlsSecret:
               name: relay-server-tls-secret
-          # serviceAccount:
-          #   extraAnnotations:
-          #     eks.amazonaws.com/role-arn: arn:aws:iam::931713665590:role/solo-v0-ha-testing-mgmt-1-gloo-mgmt-server
           serviceOverrides:
             metadata:
               annotations:
