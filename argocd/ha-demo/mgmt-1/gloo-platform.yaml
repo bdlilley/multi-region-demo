@@ -123,6 +123,7 @@ spec:
           service:
             annotations:
               external-dns.alpha.kubernetes.io/hostname: otel.ha-demo.vpc
+              external-dns.alpha.kubernetes.io/alias: "true"
               service.beta.kubernetes.io/aws-load-balancer-backend-protocol: TCP
               service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
               service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance

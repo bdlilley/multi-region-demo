@@ -159,5 +159,9 @@ kubectl create secret generic redis-config --context mgmt-2 \
 kubectl create secret generic license --context mgmt-1 \
   --namespace gloo-mesh \
   --from-literal=gloo-trial-license-key=${LICENSE_KEY}
+
+kubectl create secret generic license --context mgmt-2 \
+  --namespace gloo-mesh \
+  --from-literal=gloo-trial-license-key=${LICENSE_KEY}
 ```
 
