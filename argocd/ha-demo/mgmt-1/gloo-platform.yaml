@@ -20,10 +20,10 @@ spec:
           manageAddonNamespace: true
         extAuthService:
           enabled: false
+        licensing:
+          licenseSecretName: license-keys
         glooMgmtServer:
           enabled: true
-          licensing:
-            licenseSecretName: license-keys
           env:
           - name: REDIS_USERNAME
             value: ""
@@ -67,8 +67,6 @@ spec:
           - enabled: false
         legacyMetricsPipeline:
           enabled: false
-        licensing:
-          licenseSecretName: license-keys
         prometheus:
           enabled: true
         redis:
