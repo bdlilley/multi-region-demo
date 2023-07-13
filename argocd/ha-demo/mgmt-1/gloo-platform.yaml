@@ -21,7 +21,7 @@ spec:
         extAuthService:
           enabled: false
         licensing:
-          licenseSecretName: license-keys
+          licenseSecretName: license
         glooMgmtServer:
           enabled: true
           env:
