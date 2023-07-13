@@ -68,7 +68,7 @@ spec:
         prometheus:
           enabled: true
         redis:
-          address: master.solo-v0-ha-testing-primary.cc3vei.use1.cache.amazonaws.com:6379
+          address: master.ha-demo-primary.cc3vei.use1.cache.amazonaws.com:6379
           auth:
             enabled: true
           certs:
