@@ -43,7 +43,7 @@ In this step you will apply some static manifests + generated manifests from pri
 ```bash
 # mgmt-1
 kubectl create namespace argocd --context mgmt-1
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.8.0-rc3/manifests/install.yaml --context mgmt-1
+kubectl apply -n argocd -f ./hack/argo-manifest.yaml --context mgmt-1
 
 kubectl apply --context mgmt-1 -f -<<EOT
 apiVersion: argoproj.io/v1alpha1
@@ -68,7 +68,7 @@ EOT
 
 # mgmt-2
 kubectl create namespace argocd --context mgmt-2
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.8.0-rc3/manifests/install.yaml --context mgmt-2
+kubectl apply -n argocd -f ./hack/argo-manifest.yaml --context mgmt-2
 
 kubectl apply --context mgmt-2 -f -<<EOT
 apiVersion: argoproj.io/v1alpha1
@@ -94,7 +94,7 @@ EOT
 
 # workload-1
 kubectl create namespace argocd --context workload-1
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.8.0-rc3/manifests/install.yaml --context workload-1
+kubectl apply -n argocd -f ./hack/argo-manifest.yaml --context workload-1
 
 kubectl apply --context workload-1 -f -<<EOT
 apiVersion: argoproj.io/v1alpha1
@@ -119,7 +119,7 @@ EOT
 
 # workload-2
 kubectl create namespace argocd --context workload-2
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.8.0-rc3/manifests/install.yaml --context workload-2
+kubectl apply -n argocd -f ./hack/argo-manifest.yaml --context workload-2
 
 kubectl apply --context workload-2 -f -<<EOT
 apiVersion: argoproj.io/v1alpha1
