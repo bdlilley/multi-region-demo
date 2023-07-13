@@ -1,7 +1,5 @@
 #!/bin/bash
 
-rm -rf ../dist && mkdir -p ../dist
-
 terraform init \
   -var-file ../terraform-values/$TF_VAR_FILE \
   -var-file ./common.tfvars \

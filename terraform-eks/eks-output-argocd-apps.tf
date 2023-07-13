@@ -16,7 +16,7 @@ resource "local_file" "argocd-app-yaml" {
     aws-lb-controller-role-arn = local.irsaOutputs[each.key].aws-lb-controller
     cluster-name               = each.key
   })
-  filename = "${path.module}/../argocd/${var.resourcePrefix}/${each.key}/apps.yaml"
+  filename = "${path.module}/../argocd/${var.resourcePrefix}/${each.key}/generated-apps.yaml"
 }
 
 resource "local_file" "argocd-ext-dns-yaml" {
@@ -28,5 +28,5 @@ resource "local_file" "argocd-ext-dns-yaml" {
     cluster-name     = each.key
     domain           = var.privateHzName
   })
-  filename = "${path.module}/../argocd/${var.resourcePrefix}/${each.key}/ext-dns.yaml"
+  filename = "${path.module}/../argocd/${var.resourcePrefix}/${each.key}/generated-ext-dns.yaml"
 }

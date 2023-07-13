@@ -38,6 +38,7 @@ spec:
           serviceOverrides:
             metadata:
               annotations:
+                external-dns.alpha.kubernetes.io/hostname: mgmt.ha-demo.vpc
                 service.beta.kubernetes.io/aws-load-balancer-backend-protocol: TCP
                 service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
                 service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
@@ -87,6 +88,7 @@ spec:
           enabled: true
           service:
             annotations:
+              external-dns.alpha.kubernetes.io/hostname: otel.ha-demo.vpc
               service.beta.kubernetes.io/aws-load-balancer-backend-protocol: TCP
               service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
               service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
@@ -99,5 +101,8 @@ spec:
     repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
     targetRevision: v2.4.0-beta2-2023-07-11-main-e45f3984c
   syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
     syncOptions:
     - CreateNamespace=false

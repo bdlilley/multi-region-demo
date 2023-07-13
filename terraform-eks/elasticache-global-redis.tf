@@ -23,7 +23,7 @@ locals {
 
 resource "aws_elasticache_global_replication_group" "redis-global" {
   provider                           = aws.us-east-1
-  global_replication_group_id_suffix = "${local.resourcePrefix}-global"
+  global_replication_group_id_suffix = "${var.resourcePrefix}-global"
   primary_replication_group_id       = aws_elasticache_replication_group.redis-primary-us-east-1.id
 }
 
@@ -32,8 +32,8 @@ resource "aws_elasticache_replication_group" "redis-primary-us-east-1" {
   provider                   = aws.us-east-1
   automatic_failover_enabled = false
   # this must be unique per replication group
-  replication_group_id = "${local.resourcePrefix}-primary"
-  description          = "${local.resourcePrefix}-primary"
+  replication_group_id = "${var.resourcePrefix}-primary"
+  description          = "${var.resourcePrefix}-primary"
   node_type            = "cache.m5.large"
   num_cache_clusters   = 1
   parameter_group_name = "default.redis7"
@@ -53,7 +53,7 @@ resource "aws_elasticache_replication_group" "redis-primary-us-east-1" {
 
 resource "aws_elasticache_subnet_group" "redis-primary-us-east-1" {
   provider   = aws.us-east-1
-  name       = "${local.resourcePrefix}-primary"
+  name       = "${var.resourcePrefix}-primary"
   subnet_ids = local.redisVpcLocals["us-east-1"].subnetIds
 }
 
@@ -71,10 +71,10 @@ output "redis-primary-us-east-1" {
 resource "aws_elasticache_replication_group" "redis-secondary-us-east-2" {
   provider = aws.us-east-2
   # this must be unique per replication group
-  replication_group_id = "${local.resourcePrefix}-secondary"
+  replication_group_id = "${var.resourcePrefix}-secondary"
   # this is required to join the global group
   global_replication_group_id = aws_elasticache_global_replication_group.redis-global.global_replication_group_id
-  description                 = "${local.resourcePrefix}-secondary"
+  description                 = "${var.resourcePrefix}-secondary"
   num_cache_clusters          = 1
   # automatic_failover_enabled = false
 
@@ -90,7 +90,7 @@ resource "aws_elasticache_replication_group" "redis-secondary-us-east-2" {
 
 resource "aws_elasticache_subnet_group" "redis-secondary-us-east-2" {
   provider   = aws.us-east-2
-  name       = "${local.resourcePrefix}-secondary"
+  name       = "${var.resourcePrefix}-secondary"
   subnet_ids = local.redisVpcLocals["us-east-2"].subnetIds
 }
 

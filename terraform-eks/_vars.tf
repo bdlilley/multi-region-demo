@@ -25,3 +25,7 @@ variable "vpcConfigs" {
 variable "kubernetesVersion" {
 
 }
+
+variable "redis_auth" {
+  description = "a redis auth password to use for elasticache"
+}
