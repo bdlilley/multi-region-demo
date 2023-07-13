@@ -1,0 +1,31 @@
+---
+apiVersion: admin.gloo.solo.io/v2
+kind: Workspace
+metadata:
+  name: default
+  namespace: gloo-mesh
+  labels:
+    gloo.solo.io/team: 'platform'
+spec:
+  workloadClusters:
+  - name: '*'
+    namespaces:
+    - name: "*"
+---
+apiVersion: admin.gloo.solo.io/v2
+kind: WorkspaceSettings
+metadata:
+  name: default
+  namespace: gloo-mesh
+spec:
+  options:
+    serviceIsolation:     
+      enabled: false
+    federation:
+      enabled: false
+      serviceSelector:
+      - {}
+    eastWestGateways:
+    - selector:
+        labels:
+          istio: eastwestgateway
