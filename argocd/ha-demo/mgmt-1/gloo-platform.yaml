@@ -101,6 +101,17 @@ spec:
           enabled: false
         prometheus:
           enabled: true
+          server:
+            service:
+              type: LoadBalancer
+              annotations:
+                external-dns.alpha.kubernetes.io/hostname: prometheus.ha-demo.vpc
+                external-dns.alpha.kubernetes.io/alias: "true"
+                service.beta.kubernetes.io/aws-load-balancer-backend-protocol: TCP
+                service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+                service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
+                service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+                service.beta.kubernetes.io/aws-load-balancer-type: external
         redis:
           address: master.ha-demo-primary.cc3vei.use1.cache.amazonaws.com:6379
           auth:

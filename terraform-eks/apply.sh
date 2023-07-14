@@ -12,4 +12,4 @@ terraform apply \
   -var-file ./common.tfvars \
   --auto-approve
 
-# terraform output -json > ../dist/eks.json
+terraform output -json > ../terraform-outputs/eks.json
