@@ -34,9 +34,9 @@ metadata:
 spec:
   hosts:
     - 'demo.mesh.internal.com'
-  virtualGateways:
-    - name: default
-      namespace: gloo-mesh
+  # virtualGateways:
+  #   - name: default
+  #     namespace: gloo-mesh
   http:
     # - name: sanity
     #   matchers:
