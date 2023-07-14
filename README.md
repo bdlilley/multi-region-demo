@@ -71,6 +71,27 @@ spec:
     automated: {}
 EOT
 
+kubectl apply --context mgmt-1 -f -<<EOT
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-common
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: argocd/ha-demo/_mgmt-common
+    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+  syncPolicy:
+    automated: {}
+EOT
+
 # mgmt-2
 kubectl create namespace argocd --context mgmt-2
 kubectl apply -n argocd -f ./hack/argo-manifest.yaml --context mgmt-2
@@ -91,6 +112,27 @@ spec:
       jsonnet: {}
       recurse: true
     path: argocd/ha-demo/mgmt-2
+    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+  syncPolicy:
+    automated: {}
+EOT
+
+kubectl apply --context mgmt-2 -f -<<EOT
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-common
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: argocd/ha-demo/_mgmt-common
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
   syncPolicy:
     automated: {}

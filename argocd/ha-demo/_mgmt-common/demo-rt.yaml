@@ -43,7 +43,7 @@ spec:
         destinations:
         - ref:
             name: demo
-            namespace: default
+            namespace: demo
           port:
             number: 8080
           kind: SERVICE

@@ -84,7 +84,7 @@ spec:
                 endpoint: otel.ha-demo.vpc:4317
 
         prometheus:
-          enabled: true
+          enabled: false
 
         redis:
           deployment:
