@@ -1,30 +1,30 @@
----
-apiVersion: networking.gloo.solo.io/v2
-kind: RouteTable
-metadata:
-  name: demo
-  namespace: gloo-mesh
-spec:
-  hosts:
-  # Applies to the VD hostname that destination-app listens on
-    - 'demo.mesh.internal.com'
-  http:
-    # Route for the destination-app service
-    - name: vd-demo
-      # Prefix matching
-      matchers:
-      - uri:
-          prefix: /vd-demo
-      # Forwarding directive
-      forwardTo:
-        pathRewrite: /
-        destinations:
-          # Reference to the virtual destination that directs 15% of reviews traffic to destination-app-v1
-          - ref:
-              name: demo
-            kind: VIRTUAL_DESTINATION
-            port:
-              number: 8080
+# ---
+# apiVersion: networking.gloo.solo.io/v2
+# kind: RouteTable
+# metadata:
+#   name: demo
+#   namespace: gloo-mesh
+# spec:
+#   hosts:
+#   # Applies to the VD hostname that destination-app listens on
+#     - 'demo.mesh.internal.com'
+#   http:
+#     # Route for the destination-app service
+#     - name: vd-demo
+#       # Prefix matching
+#       matchers:
+#       - uri:
+#           prefix: /vd-demo
+#       # Forwarding directive
+#       forwardTo:
+#         pathRewrite: /
+#         destinations:
+#           # Reference to the virtual destination that directs 15% of reviews traffic to destination-app-v1
+#           - ref:
+#               name: demo
+#             kind: VIRTUAL_DESTINATION
+#             port:
+#               number: 8080
 ---
 apiVersion: networking.gloo.solo.io/v2
 kind: RouteTable
@@ -33,7 +33,7 @@ metadata:
   namespace: gloo-mesh
 spec:
   hosts:
-    - 'api.ha-demo.vpc'
+    - '*'
   virtualGateways:
     - name: default
       namespace: gloo-mesh
