@@ -91,3 +91,20 @@ resource "aws_route" "accepter" {
   vpc_peering_connection_id = aws_vpc_peering_connection.requester.id
   provider                  = aws.us-east-1
 }
+
+# data "aws_route_tables" "accepter" {
+#   vpc_id   = module.vpc-us-east-1.vpc.id
+#   provider = aws.us-east-1
+# }
+
+# data "aws_route_tables" "requester" {
+#   vpc_id   = module.vpc-us-east-2.vpc.id
+#   provider = aws.us-east-2
+# }
+
+# output "rt_ids" {
+#   value = {
+#     requester_route_tables_ids = data.aws_route_tables.requester.ids
+#     accepter_route_tables_ids  = data.aws_route_tables.accepter.ids
+#   }
+# }

@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         replicaCount: 1
-        clusterName: workload-1
+        clusterName: ha-demo-workload-1
         serviceAccount:
           create: true
           name: aws-load-balancer-controller
