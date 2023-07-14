@@ -1,5 +1,5 @@
-# This GLM is unique to workload-1 b/c the svc LB annotations are used 
-# for weighted routing and the set-identifier must be unique
+# one installation per workload server b/c the weighted routing annotation
+# has a different set identifier
 apiVersion: admin.gloo.solo.io/v2
 kind: GatewayLifecycleManager
 metadata:
@@ -7,6 +7,66 @@ metadata:
   namespace: gloo-mesh
 spec:
   installations:
+  - gatewayRevision: 1-17-2
+    # List all workload clusters to install Istio into
+    clusters:
+    - name: workload-1
+      # If set to true, the spec for this revision is applied in the cluster
+      activeGateway: true
+    istioOperatorSpec:
+      # No control plane components are installed
+      profile: empty
+      # Solo.io Istio distribution repository; required for Gloo Istio.
+      # You get the repo key from your Solo Account Representative.
+      hub: us-docker.pkg.dev/gloo-mesh/istio-workshops
+      # Any Solo.io Gloo Istio tag
+      tag: 1.17.2-solo
+      components:
+        ingressGateways:
+        # Enable the default ingress gateway
+        - name: istio-ingressgateway
+          # Deployed to gloo-mesh-gateways by default
+          namespace: gloo-mesh-gateways
+          enabled: true
+          label:
+            # Set a unique label for the gateway. This is required to
+            # ensure Gateways can select this workload
+            istio: ingressgateway
+            app: istio-ingressgateway
+          k8s:
+            serviceAnnotations:
+              external-dns.alpha.kubernetes.io/hostname: api.ha-demo.vpc
+              external-dns.alpha.kubernetes.io/aws-weight: "50"
+              external-dns.alpha.kubernetes.io/set-identifier: us-east-1
+              external-dns.alpha.kubernetes.io/alias: "true"
+              external-dns.alpha.kubernetes.io/aws-health-check-id: 00000000-0000-0000-0000-000000000000
+              service.beta.kubernetes.io/aws-load-balancer-backend-protocol: TCP
+              service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+              service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
+              service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+              service.beta.kubernetes.io/aws-load-balancer-type: external
+            service:
+              type: LoadBalancer
+              selector:
+                istio: ingressgateway
+              # Default ports
+              ports:
+                # Port for health checks on path /healthz/ready.
+                # For AWS ELBs, this port must be listed first.
+                - name: status-port
+                  port: 15021
+                  targetPort: 15021
+                # Main HTTP ingress port
+                - name: http2
+                  port: 80
+                  targetPort: 8080
+                # Main HTTPS ingress port
+                - name: https
+                  port: 443
+                  targetPort: 8443
+                - name: tls
+                  port: 15443
+                  targetPort: 15443
   # The revision for this installation, such as 1-17-3
   - gatewayRevision: 1-17-2
     # List all workload clusters to install Istio into
