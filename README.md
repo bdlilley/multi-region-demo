@@ -6,6 +6,11 @@
     external-dns.alpha.kubernetes.io/hostname: nginx.example.com
      -->
     
+# Design
+
+DNS - external-dns
+
+
 # How TO
 
 ### Create AWS Resources

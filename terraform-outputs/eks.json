@@ -1,0 +1,132 @@
+{
+  "irsa": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "mgmt-1": [
+          "object",
+          {
+            "aws-lb-controller": "string",
+            "ext-dns": "string",
+            "ext-secrets": "string",
+            "gloo-edge-proxy": "string",
+            "gloo-mgmt-server": "string",
+            "istio-ingressgateway": "string"
+          }
+        ],
+        "mgmt-2": [
+          "object",
+          {
+            "aws-lb-controller": "string",
+            "ext-dns": "string",
+            "ext-secrets": "string",
+            "gloo-edge-proxy": "string",
+            "gloo-mgmt-server": "string",
+            "istio-ingressgateway": "string"
+          }
+        ],
+        "workload-1": [
+          "object",
+          {
+            "aws-lb-controller": "string",
+            "ext-dns": "string",
+            "ext-secrets": "string",
+            "gloo-edge-proxy": "string",
+            "gloo-mgmt-server": "string",
+            "istio-ingressgateway": "string"
+          }
+        ],
+        "workload-2": [
+          "object",
+          {
+            "aws-lb-controller": "string",
+            "ext-dns": "string",
+            "ext-secrets": "string",
+            "gloo-edge-proxy": "string",
+            "gloo-mgmt-server": "string",
+            "istio-ingressgateway": "string"
+          }
+        ]
+      }
+    ],
+    "value": {
+      "mgmt-1": {
+        "aws-lb-controller": "arn:aws:iam::931713665590:role/ha-demo-mgmt-1-aws-lb-controller",
+        "ext-dns": "arn:aws:iam::931713665590:role/ha-demo-mgmt-1-ext-dns",
+        "ext-secrets": "arn:aws:iam::931713665590:role/ha-demo-mgmt-1-ext-secrets",
+        "gloo-edge-proxy": "arn:aws:iam::931713665590:role/ha-demo-mgmt-1-gloo-edge-proxy",
+        "gloo-mgmt-server": "arn:aws:iam::931713665590:role/ha-demo-mgmt-1-gloo-mgmt-server",
+        "istio-ingressgateway": "arn:aws:iam::931713665590:role/ha-demo-mgmt-1-istio-ingressgateway"
+      },
+      "mgmt-2": {
+        "aws-lb-controller": "arn:aws:iam::931713665590:role/ha-demo-mgmt-2-aws-lb-controller",
+        "ext-dns": "arn:aws:iam::931713665590:role/ha-demo-mgmt-2-ext-dns",
+        "ext-secrets": "arn:aws:iam::931713665590:role/ha-demo-mgmt-2-ext-secrets",
+        "gloo-edge-proxy": "arn:aws:iam::931713665590:role/ha-demo-mgmt-2-gloo-edge-proxy",
+        "gloo-mgmt-server": "arn:aws:iam::931713665590:role/ha-demo-mgmt-2-gloo-mgmt-server",
+        "istio-ingressgateway": "arn:aws:iam::931713665590:role/ha-demo-mgmt-2-istio-ingressgateway"
+      },
+      "workload-1": {
+        "aws-lb-controller": "arn:aws:iam::931713665590:role/ha-demo-workload-1-aws-lb-controller",
+        "ext-dns": "arn:aws:iam::931713665590:role/ha-demo-workload-1-ext-dns",
+        "ext-secrets": "arn:aws:iam::931713665590:role/ha-demo-workload-1-ext-secrets",
+        "gloo-edge-proxy": "arn:aws:iam::931713665590:role/ha-demo-workload-1-gloo-edge-proxy",
+        "gloo-mgmt-server": "arn:aws:iam::931713665590:role/ha-demo-workload-1-gloo-mgmt-server",
+        "istio-ingressgateway": "arn:aws:iam::931713665590:role/ha-demo-workload-1-istio-ingressgateway"
+      },
+      "workload-2": {
+        "aws-lb-controller": "arn:aws:iam::931713665590:role/ha-demo-workload-2-aws-lb-controller",
+        "ext-dns": "arn:aws:iam::931713665590:role/ha-demo-workload-2-ext-dns",
+        "ext-secrets": "arn:aws:iam::931713665590:role/ha-demo-workload-2-ext-secrets",
+        "gloo-edge-proxy": "arn:aws:iam::931713665590:role/ha-demo-workload-2-gloo-edge-proxy",
+        "gloo-mgmt-server": "arn:aws:iam::931713665590:role/ha-demo-workload-2-gloo-mgmt-server",
+        "istio-ingressgateway": "arn:aws:iam::931713665590:role/ha-demo-workload-2-istio-ingressgateway"
+      }
+    }
+  },
+  "redis-primary-us-east-1": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "address": "string",
+        "host": "string",
+        "port": "number"
+      }
+    ],
+    "value": {
+      "address": "master.ha-demo-primary.cc3vei.use1.cache.amazonaws.com:6379",
+      "host": "master.ha-demo-primary.cc3vei.use1.cache.amazonaws.com",
+      "port": 6379
+    }
+  },
+  "redis-secondary-us-east-2": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "address": "string",
+        "host": "string",
+        "port": "number"
+      }
+    ],
+    "value": {
+      "address": "master.ha-demo-secondary.sh5gsi.use2.cache.amazonaws.com:6379",
+      "host": "master.ha-demo-secondary.sh5gsi.use2.cache.amazonaws.com",
+      "port": 6379
+    }
+  },
+  "update-kubeconfig": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "cmd": "string"
+      }
+    ],
+    "value": {
+      "cmd": "aws eks update-kubeconfig --name ha-demo-mgmt-1 --region us-east-1\naws eks update-kubeconfig --name ha-demo-mgmt-2 --region us-east-2\naws eks update-kubeconfig --name ha-demo-workload-1 --region us-east-1\naws eks update-kubeconfig --name ha-demo-workload-2 --region us-east-2\n"
+    }
+  }
+}
