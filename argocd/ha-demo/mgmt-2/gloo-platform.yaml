@@ -76,6 +76,7 @@ spec:
                 external-dns.alpha.kubernetes.io/set-identifier: us-east-2
                 external-dns.alpha.kubernetes.io/alias: "true"
                 external-dns.alpha.kubernetes.io/aws-health-check-id: 00000000-0000-0000-0000-000000000000
+                service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: preserve_client_ip.enabled=false
                 service.beta.kubernetes.io/aws-load-balancer-backend-protocol: TCP
                 service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
                 service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
