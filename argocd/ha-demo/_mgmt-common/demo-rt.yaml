@@ -33,7 +33,7 @@ metadata:
   namespace: gloo-mesh
 spec:
   hosts:
-    - '*'
+    - 'demo.mesh.internal.com'
   virtualGateways:
     - name: default
       namespace: gloo-mesh
