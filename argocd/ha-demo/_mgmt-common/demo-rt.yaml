@@ -32,3 +32,4 @@ spec:
             kind: VIRTUAL_DESTINATION
             port:
               number: 8080
+

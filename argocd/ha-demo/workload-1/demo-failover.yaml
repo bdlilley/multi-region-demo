@@ -1,0 +1,18 @@
+---
+apiVersion: resilience.policy.gloo.solo.io/v2
+kind: FailoverPolicy
+metadata:
+  annotations:
+    cluster.solo.io/cluster: ""
+  name: locality-us-east-1
+  namespace: demo
+spec:
+  applyToDestinations:
+  - kind: VIRTUAL_DESTINATION
+    selector: {}
+  config:
+    localityMappings:
+    - from:
+        region: us-east-1
+      to:
+      - region: us-east-2
