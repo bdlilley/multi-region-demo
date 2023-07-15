@@ -1,30 +1,3 @@
-# ---
-# apiVersion: networking.gloo.solo.io/v2
-# kind: RouteTable
-# metadata:
-#   name: demo
-#   namespace: gloo-mesh
-# spec:
-#   hosts:
-#   # Applies to the VD hostname that destination-app listens on
-#     - 'demo.mesh.internal.com'
-#   http:
-#     # Route for the destination-app service
-#     - name: vd-demo
-#       # Prefix matching
-#       matchers:
-#       - uri:
-#           prefix: /vd-demo
-#       # Forwarding directive
-#       forwardTo:
-#         pathRewrite: /
-#         destinations:
-#           # Reference to the virtual destination that directs 15% of reviews traffic to destination-app-v1
-#           - ref:
-#               name: demo
-#             kind: VIRTUAL_DESTINATION
-#             port:
-#               number: 8080
 ---
 apiVersion: networking.gloo.solo.io/v2
 kind: RouteTable
@@ -38,15 +11,15 @@ spec:
     - name: default
       namespace: gloo-mesh
   http:
-    # - name: sanity
-    #   matchers:
-    #     - uri:
-    #         prefix: /sanity
-    #   labels:
-    #     route: sanity
-    #   directResponse:
-    #     status: 200
-    #     body: "it's alive"
+    - name: sanity
+      matchers:
+        - uri:
+            prefix: /sanity
+      labels:
+        route: sanity
+      directResponse:
+        status: 200
+        body: "it's alive"
     - name: demo
       matchers:
       - uri:
@@ -59,18 +32,3 @@ spec:
             kind: VIRTUAL_DESTINATION
             port:
               number: 8080
-    # - name: svc-demo
-    #   matchers:
-    #     - uri:
-    #         prefix: /svc-demo
-    #   labels:
-    #     route: demo
-    #   forwardTo:
-    #     pathRewrite: /
-    #     destinations:
-    #     - ref:
-    #         name: demo
-    #         namespace: demo
-    #       port:
-    #         number: 8080
-    #       kind: SERVICE
