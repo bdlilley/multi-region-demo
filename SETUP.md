@@ -9,7 +9,7 @@ metadata:
   name: k6-demo
 spec:
   parallelism: 1
-  arguments: --out json --dns ttl=0,select=random
+  arguments: --out json --dns ttl=0,select=random,policy=onlyIPv4
   script:
     configMap:
       name: demo-stress-test

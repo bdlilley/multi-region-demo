@@ -12,8 +12,8 @@ data:
     export const options = {
       dns: {
         ttl: '0',
-        select: 'roundRobin',
-        policy: 'any',
+        select: 'random',
+        policy: 'onlyIPv4',
       },
       stages: [
         { target: 2, duration: '4h' },
