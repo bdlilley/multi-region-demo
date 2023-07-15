@@ -9,14 +9,14 @@ metadata:
   name: k6-demo
 spec:
   parallelism: 1
-  arguments: --out json
+  arguments: --out json --dns ttl=0,select=random
   script:
     configMap:
       name: demo-stress-test
       file: k6-test-script.js
 EOT
 
-stern k6-demo-1 --output json | jq '.message | fromjson .data.tags.status | select( . != null)'
+stern k6-demo-1 --output json | jq '.message | fromjson | select(.data.tags.status != null) | .data.time + "    " + .data.tags.status'
 
 Promql query
 
