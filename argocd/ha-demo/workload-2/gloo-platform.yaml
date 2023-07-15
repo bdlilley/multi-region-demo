@@ -43,7 +43,7 @@ spec:
     helm:
       values: |
         common:
-          cluster: workload-2
+          cluster: eks-cluster-us-east-2
         # ISSUE: demo must be set to create gloo-mesh-addons
         demo:
           manageAddonNamespace: true
@@ -53,7 +53,7 @@ spec:
           relay:
             serverAddress: "mgmt.ha-demo.vpc:9900"
             clientTlsSecret:
-              name: gloo-mesh-agent-workload-2-tls-cert
+              name: gloo-mesh-agent-eks-cluster-us-east-2-tls-cert
             tokenSecret:
               key: null
               name: null

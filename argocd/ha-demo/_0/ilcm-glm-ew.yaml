@@ -10,10 +10,10 @@ spec:
   - gatewayRevision: 1-17-2
     # List all workload clusters to install Istio into
     clusters:
-    - name: workload-1
+    - name: eks-cluster-us-east-1
       # If set to true, the spec for this revision is applied in the cluster
       activeGateway: true
-    - name: workload-2
+    - name: eks-cluster-us-east-2
       # If set to true, the spec for this revision is applied in the cluster
       activeGateway: true
     istioOperatorSpec:

@@ -3,7 +3,7 @@
 apiVersion: admin.gloo.solo.io/v2
 kind: IstioLifecycleManager
 metadata:
-  name: istiod-workload-1
+  name: istiod-eks-cluster-us-east-1
   namespace: gloo-mesh
 spec:
   installations:
@@ -11,7 +11,7 @@ spec:
   - revision: 1-17-2
     # List all workload clusters to install Istio into
     clusters:
-    - name: workload-1
+    - name: eks-cluster-us-east-1
       defaultRevision: true
     istioOperatorSpec:
       # Only the control plane components are installed
@@ -71,7 +71,7 @@ spec:
 apiVersion: admin.gloo.solo.io/v2
 kind: IstioLifecycleManager
 metadata:
-  name: istiod-workload-2
+  name: istiod-eks-cluster-us-east-2
   namespace: gloo-mesh
 spec:
   installations:
@@ -79,7 +79,7 @@ spec:
   - revision: 1-17-2
     # List all workload clusters to install Istio into
     clusters:
-    - name: workload-2
+    - name: eks-cluster-us-east-2
       defaultRevision: true
     istioOperatorSpec:
       # Only the control plane components are installed

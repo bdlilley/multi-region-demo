@@ -2,7 +2,7 @@
 apiVersion: admin.gloo.solo.io/v2
 kind: KubernetesCluster
 metadata:
-  name: workload-1
+  name: eks-cluster-us-east-1
   namespace: gloo-mesh
 spec:
   clusterDomain: cluster.local
@@ -10,7 +10,7 @@ spec:
 apiVersion: admin.gloo.solo.io/v2
 kind: KubernetesCluster
 metadata:
-  name: workload-2
+  name: eks-cluster-us-east-2
   namespace: gloo-mesh
 spec:
   clusterDomain: cluster.local
