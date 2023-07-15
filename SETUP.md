@@ -20,4 +20,4 @@ Promql query
 
 sum without (workload_id, source_principal) (rate(istio_requests_total{destination_workload_id="demo.demo.workload-1", connection_security_policy="mutual_tls", response_code="200"}[5m]))
 
-sum without (workload_id, source_principal) (rate(istio_requests_total{destination_workload_id="demo.demo.workload-2", connection_security_policy="mutual_tls", response_code="200"}[5m]))
+sum without (workload_id, source_principal) (rate(istio_requests_total{destination_workload_id="demo.demo.workload-1", connection_security_policy="mutual_tls", response_code!="200"}[5m])) OR on() vector(0)
