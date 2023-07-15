@@ -11,7 +11,7 @@ data:
 
     export const options = {
       dns: {
-        ttl: '10s',
+        ttl: '0',
         select: 'roundRobin',
         policy: 'any',
       },

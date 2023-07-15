@@ -8,16 +8,21 @@ kind: K6
 metadata:
   name: k6-demo
 spec:
-  parallelism: 2
+  parallelism: 1
+  arguments: --out json
   script:
     configMap:
       name: demo-stress-test
       file: k6-test-script.js
 EOT
 
+stern k6-demo-1 --output json | jq '.message | fromjson .data.tags.status | select( . != null)'
 
 Promql query
 
+
 sum without (workload_id, source_principal) (rate(istio_requests_total{destination_workload_id="demo.demo.workload-1", connection_security_policy="mutual_tls", response_code="200"}[5m]))
 
-sum without (workload_id, source_principal) (rate(istio_requests_total{destination_workload_id="demo.demo.workload-1", connection_security_policy="mutual_tls", response_code!="200"}[5m])) OR on() vector(0)
+sum without (workload_id, source_principal) (rate(istio_requests_total{destination_workload_id="demo.demo.workload-2", connection_security_policy="mutual_tls", response_code="200"}[5m]))
+
+rate(istio_requests_total{response_code!="200"}[5m])
