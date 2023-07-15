@@ -91,13 +91,13 @@ spec:
               secretKeyRef:
                 key: token
                 name: redis-config
-        istioInstallations:
-          controlPlane:
-            enabled: true
-            gatewayRevision: 1-17-2
-          enabled: true
-          northSouthGateways:
-          - enabled: false
+        # istioInstallations:
+        #   controlPlane:
+        #     enabled: true
+        #     gatewayRevision: 1-17-2
+        #   enabled: true
+        #   northSouthGateways:
+        #   - enabled: false
         legacyMetricsPipeline:
           enabled: false
         prometheus:
