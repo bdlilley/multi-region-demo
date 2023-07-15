@@ -1,18 +1,18 @@
-# ---
-# apiVersion: networking.gloo.solo.io/v2
-# kind: VirtualDestination
-# metadata:
-#   name: demo
-#   namespace: gloo-mesh
-# spec:
-#   hosts:
-#   # Arbitrary, internal-only hostname assigned to the endpoint
-#   - demo.mesh.internal.com
-#   ports:
-#   - number: 8080
-#     protocol: HTTP
-#     targetPort:
-#       number: 8080
-#   services:
-#     - labels:
-#         app: demo
+---
+apiVersion: networking.gloo.solo.io/v2
+kind: VirtualDestination
+metadata:
+  name: demo
+  namespace: gloo-mesh
+spec:
+  hosts:
+  # Arbitrary, internal-only hostname assigned to the endpoint
+  - demo.mesh.internal.com
+  ports:
+  - number: 8080
+    protocol: HTTP
+    targetPort:
+      number: 8080
+  services:
+    - labels:
+        app: demo
