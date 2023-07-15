@@ -14,5 +14,5 @@ spec:
       generated:
         ttlDays: 730
       secretRef:
-         name: relay-root-tls-secret.gloo-mesh
+         name: relay-server-tls-secret.gloo-mesh
          namespace: gloo-mesh
