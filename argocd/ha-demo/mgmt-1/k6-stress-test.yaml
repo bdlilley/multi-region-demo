@@ -10,6 +10,11 @@ data:
     import { check } from 'k6';
 
     export const options = {
+      dns: {
+        ttl: '10s',
+        select: 'roundRobin',
+        policy: 'any',
+      },
       stages: [
         { target: 10, duration: '4h' },
         { target: 0, duration: '30s' },
