@@ -168,10 +168,10 @@ spec:
       recurse: true
     path: argocd/ha-demo/workload-1
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-  syncPolicy: {}
-    # automated:
-    #   prune: true
-    #   selfHeal: true 
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
 EOT
 
 # workload-2
@@ -195,10 +195,10 @@ spec:
       recurse: true
     path: argocd/ha-demo/workload-2
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-  syncPolicy: {}
-    # automated:
-    #   prune: true
-    #   selfHeal: true 
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
 EOT
 
 # redis auth secrets for mgmt servers

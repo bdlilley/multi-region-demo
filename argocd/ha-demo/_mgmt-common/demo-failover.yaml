@@ -4,14 +4,18 @@ kind: FailoverPolicy
 metadata:
   annotations:
     cluster.solo.io/cluster: ""
-  name: locality-us-east-2
-  namespace: demo
+  name: demo-locality
+  namespace: gloo-mesh
 spec:
   applyToDestinations:
   - kind: VIRTUAL_DESTINATION
     selector: {}
   config:
     localityMappings:
+    - from:
+        region: us-east-1
+      to:
+      - region: us-east-2
     - from:
         region: us-east-2
       to:
