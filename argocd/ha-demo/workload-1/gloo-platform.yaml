@@ -1,91 +1,91 @@
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: gloo-platform-crds
-  namespace: argocd
-spec:
-  destination:
-    namespace: gloo-mesh
-    server: https://kubernetes.default.svc
-  project: default
-  source:
-    chart: gloo-platform-crds
-    repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
-    targetRevision: v2.4.0-beta2-2023-07-11-main-e45f3984c
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true 
-    syncOptions:
-    - CreateNamespace=false
---- 
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: gloo-platform
-  namespace: argocd
-spec:
-  destination:
-    namespace: gloo-mesh
-    server: https://kubernetes.default.svc
-  project: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true 
-    syncOptions:
-    - CreateNamespace=false
-  source:
-    chart: gloo-platform
-    repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
-    targetRevision: v2.4.0-beta2-2023-07-11-main-e45f3984c
-    helm:
-      values: |
-        common:
-          cluster: workload-1
-        # ISSUE: demo must be set to create gloo-mesh-addons
-        demo:
-          manageAddonNamespace: true
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: gloo-platform-crds
+#   namespace: argocd
+# spec:
+#   destination:
+#     namespace: gloo-mesh
+#     server: https://kubernetes.default.svc
+#   project: default
+#   source:
+#     chart: gloo-platform-crds
+#     repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
+#     targetRevision: v2.4.0-beta2-2023-07-11-main-e45f3984c
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true 
+#     syncOptions:
+#     - CreateNamespace=false
+# --- 
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: gloo-platform
+#   namespace: argocd
+# spec:
+#   destination:
+#     namespace: gloo-mesh
+#     server: https://kubernetes.default.svc
+#   project: default
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true 
+#     syncOptions:
+#     - CreateNamespace=false
+#   source:
+#     chart: gloo-platform
+#     repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
+#     targetRevision: v2.4.0-beta2-2023-07-11-main-e45f3984c
+#     helm:
+#       values: |
+#         common:
+#           cluster: workload-1
+#         # ISSUE: demo must be set to create gloo-mesh-addons
+#         demo:
+#           manageAddonNamespace: true
 
-        glooAgent:
-          enabled: true
-          relay:
-            serverAddress: "mgmt.ha-demo.vpc:9900"
-            clientTlsSecret:
-              name: gloo-mesh-agent-workload-1-tls-cert
-            tokenSecret:
-              key: null
-              name: null
-              namespace: null
+#         glooAgent:
+#           enabled: true
+#           relay:
+#             serverAddress: "mgmt.ha-demo.vpc:9900"
+#             clientTlsSecret:
+#               name: gloo-mesh-agent-workload-1-tls-cert
+#             tokenSecret:
+#               key: null
+#               name: null
+#               namespace: null
 
-        glooUi:
-          enabled: false
+#         glooUi:
+#           enabled: false
 
-        glooMgmtServer:
-          enabled: false
+#         glooMgmtServer:
+#           enabled: false
 
-        extAuthService:
-          enabled: false
+#         extAuthService:
+#           enabled: false
 
-        legacyMetricsPipeline:
-          enabled: false
+#         legacyMetricsPipeline:
+#           enabled: false
 
-        telemetryGateway:
-          enabled: false
-          service:
-            type: ClusterIP
+#         telemetryGateway:
+#           enabled: false
+#           service:
+#             type: ClusterIP
 
-        telemetryCollector:
-          enabled: true
-          config:
-            exporters:
-              otlp: 
-                endpoint: otel.ha-demo.vpc:4317
+#         telemetryCollector:
+#           enabled: true
+#           config:
+#             exporters:
+#               otlp: 
+#                 endpoint: otel.ha-demo.vpc:4317
 
-        prometheus:
-          enabled: false
+#         prometheus:
+#           enabled: false
 
-        redis:
-          deployment:
-            enabled: false
+#         redis:
+#           deployment:
+#             enabled: false
