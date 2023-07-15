@@ -1,0 +1,17 @@
+apiVersion: admin.gloo.solo.io/v2
+kind: RootTrustPolicy
+metadata:
+  name: root-trust-policy
+  namespace: gloo-mesh
+spec:
+  config:
+    autoRestartPods: true
+    intermediateCertOptions:
+      secretRotationGracePeriodRatio: 0.1
+      ttlDays: 1
+    mgmtServerCa: 
+      generated:
+        ttlDays: 730
+      secretRef:
+         name: relay-root-tls-secret.gloo-mesh
+         namespace: gloo-mesh
