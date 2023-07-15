@@ -1,127 +1,127 @@
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: gloo-platform-crds
-#   namespace: argocd
-# spec:
-#   destination:
-#     namespace: gloo-mesh
-#     server: https://kubernetes.default.svc
-#   project: default
-#   source:
-#     chart: gloo-platform-crds
-#     repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
-#     targetRevision: v2.4.0-beta2-2023-07-11-main-e45f3984c
-#   syncPolicy:
-#     automated:
-#       prune: true
-#       selfHeal: true 
-#     syncOptions:
-#     - CreateNamespace=false
-# --- 
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: gloo-platform
-#   namespace: argocd
-# spec:
-#   destination:
-#     namespace: gloo-mesh
-#     server: https://kubernetes.default.svc
-#   project: default
-#   syncPolicy:
-#     automated:
-#       prune: true
-#       selfHeal: true 
-#     syncOptions:
-#     - CreateNamespace=false
-#   source:
-#     chart: gloo-platform
-#     repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
-#     targetRevision: v2.4.0-beta2-2023-07-11-main-e45f3984c
-#     helm:
-#       values: |
-#         common:
-#           cluster: mgmt-cluster
-#           prometheusUrl: http://prometheus.ha-demo.vpc
-#         demo:
-#           manageAddonNamespace: true
-#         extAuthService:
-#           enabled: false
-#         licensing:
-#           licenseSecretName: license
-#         glooMgmtServer:
-#           enabled: true
-#           env:
-#           - name: REDIS_USERNAME
-#             value: ""
-#           - name: REDIS_PASSWORD
-#             valueFrom:
-#               secretKeyRef:
-#                 key: token
-#                 name: redis-config
-#           relay:
-#             disableCa: true
-#             disableCaCertGeneration: true
-#             disableTokenGeneration: true
-#             pushRbac: true
-#             tlsSecret:
-#               name: relay-server-tls-secret
-#           serviceOverrides:
-#             metadata:
-#               annotations:
-#                 external-dns.alpha.kubernetes.io/hostname: mgmt.ha-demo.vpc
-#                 external-dns.alpha.kubernetes.io/aws-failover: SECONDARY
-#                 external-dns.alpha.kubernetes.io/set-identifier: us-east-2
-#                 external-dns.alpha.kubernetes.io/alias: "true"
-#                 external-dns.alpha.kubernetes.io/aws-health-check-id: 00000000-0000-0000-0000-000000000000
-#                 service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: preserve_client_ip.enabled=false
-#                 service.beta.kubernetes.io/aws-load-balancer-backend-protocol: TCP
-#                 service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-#                 service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
-#                 service.beta.kubernetes.io/aws-load-balancer-scheme: internal
-#                 service.beta.kubernetes.io/aws-load-balancer-type: external
-#         glooUi:
-#           enabled: true
-#           env:
-#           - name: REDIS_USERNAME
-#             value: ""
-#           - name: REDIS_PASSWORD
-#             valueFrom:
-#               secretKeyRef:
-#                 key: token
-#                 name: redis-config
-#         istioInstallations:
-#           controlPlane:
-#             enabled: true
-#             gatewayRevision: 1-17-2
-#           enabled: true
-#           northSouthGateways:
-#           - enabled: false
-#         legacyMetricsPipeline:
-#           enabled: false
-#         prometheus:
-#           enabled: false
-#         redis:
-#           address: master.ha-demo-secondary.sh5gsi.use2.cache.amazonaws.com:6379
-#           auth:
-#             enabled: true
-#           certs:
-#             enabled: true
-#           db: 0
-#           deployment:
-#             enabled: false
-#           passwordKey: token
-#           secretName: redis-config
-#         telemetryCollector:
-#           config:
-#             exporters:
-#               otlp:
-#                 endpoint: otel.ha-demo.vpc:4317
-#           enabled: true
-#         telemetryGateway:
-#           enabled: false
-#         global:
-#           common:
-#             cluster: mgmt-cluster
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gloo-platform-crds
+  namespace: argocd
+spec:
+  destination:
+    namespace: gloo-mesh
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: gloo-platform-crds
+    repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
+    targetRevision: v2.4.0-beta2-2023-07-11-main-e45f3984c
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+--- 
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gloo-platform
+  namespace: argocd
+spec:
+  destination:
+    namespace: gloo-mesh
+    server: https://kubernetes.default.svc
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  source:
+    chart: gloo-platform
+    repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
+    targetRevision: v2.4.0-beta2-2023-07-11-main-e45f3984c
+    helm:
+      values: |
+        common:
+          cluster: mgmt-cluster
+          prometheusUrl: http://prometheus.ha-demo.vpc
+        demo:
+          manageAddonNamespace: true
+        extAuthService:
+          enabled: false
+        licensing:
+          licenseSecretName: license
+        glooMgmtServer:
+          enabled: true
+          env:
+          - name: REDIS_USERNAME
+            value: ""
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: token
+                name: redis-config
+          relay:
+            disableCa: true
+            disableCaCertGeneration: true
+            disableTokenGeneration: true
+            pushRbac: true
+            tlsSecret:
+              name: relay-server-tls-secret
+          serviceOverrides:
+            metadata:
+              annotations:
+                external-dns.alpha.kubernetes.io/hostname: mgmt.ha-demo.vpc
+                external-dns.alpha.kubernetes.io/aws-failover: SECONDARY
+                external-dns.alpha.kubernetes.io/set-identifier: us-east-2
+                external-dns.alpha.kubernetes.io/alias: "true"
+                external-dns.alpha.kubernetes.io/aws-health-check-id: 00000000-0000-0000-0000-000000000000
+                service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: preserve_client_ip.enabled=false
+                service.beta.kubernetes.io/aws-load-balancer-backend-protocol: TCP
+                service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+                service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
+                service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+                service.beta.kubernetes.io/aws-load-balancer-type: external
+        glooUi:
+          enabled: true
+          env:
+          - name: REDIS_USERNAME
+            value: ""
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: token
+                name: redis-config
+        istioInstallations:
+          controlPlane:
+            enabled: true
+            gatewayRevision: 1-17-2
+          enabled: true
+          northSouthGateways:
+          - enabled: false
+        legacyMetricsPipeline:
+          enabled: false
+        prometheus:
+          enabled: false
+        redis:
+          address: master.ha-demo-secondary.sh5gsi.use2.cache.amazonaws.com:6379
+          auth:
+            enabled: true
+          certs:
+            enabled: true
+          db: 0
+          deployment:
+            enabled: false
+          passwordKey: token
+          secretName: redis-config
+        telemetryCollector:
+          config:
+            exporters:
+              otlp:
+                endpoint: otel.ha-demo.vpc:4317
+          enabled: true
+        telemetryGateway:
+          enabled: false
+        global:
+          common:
+            cluster: mgmt-cluster
