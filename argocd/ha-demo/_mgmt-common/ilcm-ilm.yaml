@@ -3,7 +3,7 @@
 apiVersion: admin.gloo.solo.io/v2
 kind: IstioLifecycleManager
 metadata:
-  name: istiod-agents
+  name: istiod-workload-1
   namespace: gloo-mesh
 spec:
   installations:
@@ -13,6 +13,72 @@ spec:
     clusters:
     - name: workload-1
       defaultRevision: true
+    istioOperatorSpec:
+      # Only the control plane components are installed
+      # (https://istio.io/latest/docs/setup/additional-setup/config-profiles/)
+      profile: minimal
+      # Solo.io Istio distribution repository; required for Gloo Istio.
+      # You get the repo key from your Solo Account Representative.
+      hub: us-docker.pkg.dev/gloo-mesh/istio-workshops
+      # Any Solo.io Gloo Istio tag
+      tag: 1.17.2-solo
+      namespace: istio-system
+      # Mesh configuration
+      meshConfig:
+        # Enable access logging only if using.
+        accessLogFile: /dev/stdout
+        # Encoding for the proxy access log (TEXT or JSON). Default value is TEXT.
+        accessLogEncoding: JSON
+        # Enable span tracing only if using.
+        enableTracing: true
+        defaultConfig:
+          # Wait for the istio-proxy to start before starting application pods
+          holdApplicationUntilProxyStarts: true
+          # Enable Gloo accesslog service. Required for Gloo Access Logging
+          envoyAccessLogService:
+            address: gloo-mesh-agent.gloo-mesh:9977
+          proxyMetadata:
+            # For known hosts, enable the Istio agent to handle DNS requests for any custom ServiceEntry, such as non-Kubernetes services.
+            # Unknown hosts are automatically resolved using upstream DNS servers in resolv.conf (for proxy-dns)
+            ISTIO_META_DNS_CAPTURE: "true"
+            # Enable automatic address allocation within Envoy to route to non-Kubernetes services.
+            # Useful for external services where the IP address may change by creating an internal stable IP address that represents the external host.
+            # For more info, see https://istio.io/latest/docs/ops/configuration/traffic-management/dns-proxy/
+            ISTIO_META_DNS_AUTO_ALLOCATE: "true"
+        # Set the default behavior of the sidecar for handling outbound traffic
+        # from the application
+        outboundTrafficPolicy:
+          mode: ALLOW_ANY
+        # The administrative root namespace for Istio configuration
+        rootNamespace: istio-system
+      # Traffic management
+      components:
+        pilot:
+          k8s:
+            env:
+            # Disable selecting workload entries for local service routing, so that Kubernetes 
+            # will not automatically match services to workload entries with matching selector labels.
+            # Required for Gloo Mesh VirtualDestination functionality.
+            # For more info, see https://istio.io/latest/docs/reference/commands/pilot-discovery/
+            - name: PILOT_ENABLE_K8S_SELECT_WORKLOAD_ENTRIES
+              value: "false"
+            # Skip the validation step for mTLS within the cluster.
+            # This approach is not recommended if you integrated Istio with your own CA,
+            # but is useful for PoCs or demos in which you use self-signed certificates.
+            - name: PILOT_SKIP_VALIDATE_TRUST_DOMAIN
+              value: "true"
+---
+apiVersion: admin.gloo.solo.io/v2
+kind: IstioLifecycleManager
+metadata:
+  name: istiod-workload-2
+  namespace: gloo-mesh
+spec:
+  installations:
+  # The revision for this installation, such as 1-17-3
+  - revision: 1-17-2
+    # List all workload clusters to install Istio into
+    clusters:
     - name: workload-2
       defaultRevision: true
     istioOperatorSpec:
