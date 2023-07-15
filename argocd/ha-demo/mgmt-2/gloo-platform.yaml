@@ -44,7 +44,6 @@ spec:
       values: |
         common:
           cluster: mgmt-cluster
-          prometheusUrl: http://prometheus.ha-demo.vpc
         demo:
           manageAddonNamespace: true
         extAuthService:
@@ -102,7 +101,7 @@ spec:
         legacyMetricsPipeline:
           enabled: false
         prometheus:
-          enabled: false
+          enabled: true
         redis:
           address: master.ha-demo-secondary.sh5gsi.use2.cache.amazonaws.com:6379
           auth:
