@@ -64,7 +64,6 @@ spec:
             - --source=service
             - --domain-filter=ha-demo.vpc # will make ExternalDNS see only the hosted zones matching provided domain, omit to process all available hosted zones
             - --provider=aws
-            - --aws-prefer-cname
             - --aws-zone-type=private # only look at public hosted zones (valid values are public, private or no value for both)
             - --registry=txt
             - --txt-prefix=ha-demo-workload-1

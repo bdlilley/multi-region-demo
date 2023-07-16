@@ -73,8 +73,9 @@ spec:
                 external-dns.alpha.kubernetes.io/hostname: mgmt.ha-demo.vpc
                 external-dns.alpha.kubernetes.io/aws-failover: PRIMARY
                 external-dns.alpha.kubernetes.io/set-identifier: us-east-1
-                external-dns.alpha.kubernetes.io/alias: "false"
-                external-dns.alpha.kubernetes.io/ttl: "10"
+                external-dns.alpha.kubernetes.io/alias: "true"
+                # can't set ttl on alias records; they are always 60s
+                # external-dns.alpha.kubernetes.io/ttl: "10"
                 external-dns.alpha.kubernetes.io/aws-health-check-id: 00000000-0000-0000-0000-000000000000
                 service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: preserve_client_ip.enabled=false
                 service.beta.kubernetes.io/aws-load-balancer-backend-protocol: TCP
@@ -108,8 +109,9 @@ spec:
               type: LoadBalancer
               annotations:
                 external-dns.alpha.kubernetes.io/hostname: prometheus.ha-demo.vpc
-                external-dns.alpha.kubernetes.io/alias: "false"
-                external-dns.alpha.kubernetes.io/ttl: "10"
+                external-dns.alpha.kubernetes.io/alias: "true"
+                # can't set ttl on alias records; they are always 60s
+                # external-dns.alpha.kubernetes.io/ttl: "10"
                 service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: preserve_client_ip.enabled=false
                 service.beta.kubernetes.io/aws-load-balancer-backend-protocol: TCP
                 service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
@@ -138,8 +140,9 @@ spec:
           service:
             annotations:
               external-dns.alpha.kubernetes.io/hostname: otel.ha-demo.vpc
-              external-dns.alpha.kubernetes.io/alias: "false"
-              external-dns.alpha.kubernetes.io/ttl: "10"
+              external-dns.alpha.kubernetes.io/alias: "true"
+              # can't set ttl on alias records; they are always 60s
+              # external-dns.alpha.kubernetes.io/ttl: "10"
               service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: preserve_client_ip.enabled=false
               service.beta.kubernetes.io/aws-load-balancer-backend-protocol: TCP
               service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
