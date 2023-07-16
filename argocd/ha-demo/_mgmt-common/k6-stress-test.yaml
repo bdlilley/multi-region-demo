@@ -10,6 +10,7 @@ data:
     import { check } from 'k6';
 
     export const options = {
+      noConnectionReuse: true,
       dns: {
         ttl: '0',
         select: 'random',
