@@ -67,6 +67,7 @@ spec:
             - --aws-prefer-cname
             - --aws-zone-type=private # only look at public hosted zones (valid values are public, private or no value for both)
             - --registry=txt
+            - --txt-prefix=ha-demo-workload-1
             - --txt-owner-id=external-dns-ha-demo-workload-1
           env:
             - name: AWS_DEFAULT_REGION
