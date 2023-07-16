@@ -195,7 +195,7 @@ spec:
       recurse: true
     path: argocd/ha-demo/workload-2
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-  syncPolicy:
+  syncPolicy: 
     automated:
       prune: true
       selfHeal: true 
@@ -223,4 +223,5 @@ kubectl create secret generic license --context mgmt-2 \
   --namespace gloo-mesh \
   --from-literal=gloo-trial-license-key=${LICENSE_KEY}
 ```
+
 
