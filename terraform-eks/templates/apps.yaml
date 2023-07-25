@@ -1,8 +1,9 @@
+
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: aws-load-balancer-controller
+  name: ${cluster-name-short}-aws-lb
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -28,13 +29,13 @@ spec:
     syncOptions:
     - CreateNamespace=false
   destination:
-    server: https://kubernetes.default.svc
+    server: ${ destination-server }
     namespace: kube-system  
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: external-secrets
+  name: ${cluster-name-short}-ext-secrets
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -58,13 +59,13 @@ spec:
     syncOptions:
     - CreateNamespace=false
   destination:
-    server: https://kubernetes.default.svc
+    server: ${ destination-server }
     namespace: kube-system  
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: ${cluster-name-short}-cert-manager
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -84,5 +85,5 @@ spec:
     syncOptions:
     - CreateNamespace=false
   destination:
-    server: https://kubernetes.default.svc
+    server: ${ destination-server }
     namespace: kube-system  

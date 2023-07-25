@@ -6,11 +6,6 @@
     external-dns.alpha.kubernetes.io/hostname: nginx.example.com
      -->
     
-# Design
-
-DNS - external-dns
-
-
 # How TO
 
 ### Create AWS Resources
@@ -40,11 +35,121 @@ Commit and push files generated in the previous step.  In the next step you will
 
 The terraform output containted the commands needed to add EKS clusters to a kubeconfig.  The remainder of steps assume you have renamed them to mgmt-1, mgmt-2, workload-1, workload-2.
 
-### Install Argo and Apps
+### Configure ArgoCD Multi-Cluster
 
-In this step you will apply some static manifests + generated manifests from prior steps to clusters for argo to manage.
+```bash
+# IAM CRD (instead of patching aws-auth cm)
+clusters=("mgmt-1" "mgmt-2" "workload-1" "workload-2")
+for c in ${clusters[@]}; do 
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-iam-authenticator/master/deploy/iamidentitymapping.yaml --context ${c}
+  
+  kubectl apply --context ${c} -f - <<EOT
+apiVersion: iamauthenticator.k8s.aws/v1alpha1
+kind: IAMIdentityMapping
+metadata:
+  name: argocd-${c}
+  namespace: kube-system
+spec:
+  arn: "`terraform output --json | jq -r --arg cluster "$c" '.irsa_argocd.value[$cluster]'`"
+  username: argocd
+  # in production you should use rbac and create role bindings for the user
+  groups:
+  - system:masters
+EOT
+done
 
-1. Install argo 
+# install argocd and mgmt-1 and register all other clusters
+kubectl create namespace argocd --context mgmt-1
+kubectl apply -n argocd --context mgmt-1 -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+# configure the remote clusters in mgmt-1
+clusters=("mgmt-2" "workload-1" "workload-2")
+for c in ${clusters[@]}; do 
+  kubectl apply --context mgmt-1 -f - <<EOT
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cluster-${c}
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: cluster
+type: Opaque
+stringData:
+  name: cluster-${c}
+  server: `terraform output --json | jq -r --arg cluster "$c" '.eks.value[$cluster].eks.endpoint'`
+  config: |
+    {
+      "awsAuthConfig": {
+        "clusterName": "`terraform output --json | jq -r --arg cluster "$c" '.eks.value[$cluster].eks.name'`",
+        "roleARN": "`terraform output --json | jq -r --arg cluster "$c" '.irsa_argocd.value[$cluster]'`"
+      },
+      "tlsClientConfig": {
+        "insecure": true
+      }
+    }
+EOT
+done
+
+```
+
+### Create Required Secrets
+
+```bash
+kubectl create ns gloo-mesh  --context mgmt-1 
+kubectl create ns gloo-mesh  --context mgmt-2
+
+# redis auth secrets for mgmt servers
+kubectl create secret generic redis-config --context mgmt-1 \
+  --namespace gloo-mesh \
+  --from-literal=token="${TF_VAR_redis_auth}" \
+  --from-literal=host="`terraform output --json | jq -r '."redis-primary-us-east-1".value.host'`"
+
+kubectl create secret generic redis-config --context mgmt-2 \
+  --namespace gloo-mesh \
+  --from-literal=token="${TF_VAR_redis_auth}" \
+  --from-literal=host="`terraform output --json | jq -r '."redis-secondary-us-east-2".value.host'`"
+
+# gloo license secrets
+
+kubectl create secret generic license --context mgmt-1 \
+  --namespace gloo-mesh \
+  --from-literal=gloo-trial-license-key=${LICENSE_KEY}
+
+kubectl create secret generic license --context mgmt-2 \
+  --namespace gloo-mesh \
+  --from-literal=gloo-trial-license-key=${LICENSE_KEY}
+```
+
+### Create apps in argo
+
+kubectl apply --context mgmt-1 -f -<<EOT
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ${c}-app-of-apps
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: argocd/ha-demo/mgmt-1
+    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+EOT
+
+
+<!-- 
+
+
+2. Install argo 
 ```bash
 # mgmt-1
 kubectl create namespace argocd --context mgmt-1
@@ -201,27 +306,7 @@ spec:
       selfHeal: true 
 EOT
 
-# redis auth secrets for mgmt servers
 
-kubectl create secret generic redis-config --context mgmt-1 \
-  --namespace gloo-mesh \
-  --from-literal=token="${TF_VAR_redis_auth}" \
-  --from-literal=host="`terraform output --json | jq -r '."redis-primary-us-east-1".value.host'`"
-
-kubectl create secret generic redis-config --context mgmt-2 \
-  --namespace gloo-mesh \
-  --from-literal=token="${TF_VAR_redis_auth}" \
-  --from-literal=host="`terraform output --json | jq -r '."redis-secondary-us-east-2".value.host'`"
-
-# gloo license secrets
-
-kubectl create secret generic license --context mgmt-1 \
-  --namespace gloo-mesh \
-  --from-literal=gloo-trial-license-key=${LICENSE_KEY}
-
-kubectl create secret generic license --context mgmt-2 \
-  --namespace gloo-mesh \
-  --from-literal=gloo-trial-license-key=${LICENSE_KEY}
 ```
 
-
+ -->
