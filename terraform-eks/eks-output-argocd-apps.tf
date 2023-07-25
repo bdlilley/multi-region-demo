@@ -34,7 +34,7 @@ resource "local_file" "argocd-app-yaml" {
     cluster-name-short         = each.key
     destination-server         = each.value.destination-server
   })
-  filename = "${path.module}/../argocd/${var.resourcePrefix}/mgmt-1/generated-apps-${each.key}-.yaml"
+  filename = "${path.module}/../argocd/${var.resourcePrefix}/_argocd-apps/generated-apps-${each.key}-.yaml"
 }
 
 resource "local_file" "argocd-ext-dns-yaml" {
