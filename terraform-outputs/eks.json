@@ -933,6 +933,22 @@
       }
     }
   },
+  "iam_argocd": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "mgmt-2": "string",
+        "workload-1": "string",
+        "workload-2": "string"
+      }
+    ],
+    "value": {
+      "mgmt-2": "arn:aws:iam::931713665590:role/ha-demo-mgmt-2-argocd",
+      "workload-1": "arn:aws:iam::931713665590:role/ha-demo-workload-1-argocd",
+      "workload-2": "arn:aws:iam::931713665590:role/ha-demo-workload-2-argocd"
+    }
+  },
   "irsa": {
     "sensitive": false,
     "type": [
@@ -1019,23 +1035,10 @@
       }
     }
   },
-  "irsa_argocd": {
+  "irsa_argocd_controller": {
     "sensitive": false,
-    "type": [
-      "object",
-      {
-        "mgmt-1": "string",
-        "mgmt-2": "string",
-        "workload-1": "string",
-        "workload-2": "string"
-      }
-    ],
-    "value": {
-      "mgmt-1": "arn:aws:iam::931713665590:role/ha-demo-mgmt-1-argocd",
-      "mgmt-2": "arn:aws:iam::931713665590:role/ha-demo-mgmt-2-argocd",
-      "workload-1": "arn:aws:iam::931713665590:role/ha-demo-workload-1-argocd",
-      "workload-2": "arn:aws:iam::931713665590:role/ha-demo-workload-2-argocd"
-    }
+    "type": "string",
+    "value": "arn:aws:iam::931713665590:role/ha-demo-mgmt-1-argocd-controller"
   },
   "redis-primary-us-east-1": {
     "sensitive": false,

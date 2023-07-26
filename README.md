@@ -38,29 +38,18 @@ The terraform output containted the commands needed to add EKS clusters to a kub
 ### Configure ArgoCD Multi-Cluster
 
 ```bash
-# IAM CRD (instead of patching aws-auth cm)
-clusters=("mgmt-1" "mgmt-2" "workload-1" "workload-2")
-for c in ${clusters[@]}; do 
-  kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-iam-authenticator/master/deploy/iamidentitymapping.yaml --context ${c}
-  
-  kubectl apply --context ${c} -f - <<EOT
-apiVersion: iamauthenticator.k8s.aws/v1alpha1
-kind: IAMIdentityMapping
-metadata:
-  name: argocd-${c}
-  namespace: kube-system
-spec:
-  arn: "`terraform output --json | jq -r --arg cluster "$c" '.irsa_argocd.value[$cluster]'`"
-  username: argocd
-  # in production you should use rbac and create role bindings for the user
-  groups:
-  - system:masters
-EOT
+# patch aws-auth to allow argocd remote management
+clusters=("mgmt-2" "workload-1" "workload-2")
+for c in ${clusters[@]}; do
+  # I would not use system:masters in production; instead remove groups and create role bindings for username argocd
+  ROLE="    - rolearn: `terraform output --json | jq -r --arg cluster "$c" '.iam_argocd.value[$cluster]'`\n      username: argocd\n      groups:\n        - system:masters"
+  kubectl get -n kube-system configmap/aws-auth --context ${c} -o yaml | awk "/mapRoles: \|/{print;print \"$ROLE\";next}1" > /tmp/aws-auth-patch.yml
+  kubectl patch configmap/aws-auth -n kube-system --context ${c} --patch "$(cat /tmp/aws-auth-patch.yml)"
 done
 
 # install argocd and mgmt-1 and register all other clusters
 kubectl create namespace argocd --context mgmt-1
-kubectl apply -n argocd --context mgmt-1 -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply -k argocd/ha-demo/_install_argocd --context mgmt-1
 
 # configure the remote clusters in mgmt-1
 clusters=("mgmt-2" "workload-1" "workload-2")
@@ -69,22 +58,23 @@ for c in ${clusters[@]}; do
 apiVersion: v1
 kind: Secret
 metadata:
-  name: cluster-${c}
+  name: ${c}
   namespace: argocd
   labels:
     argocd.argoproj.io/secret-type: cluster
 type: Opaque
 stringData:
-  name: cluster-${c}
+  name: ${c}
   server: `terraform output --json | jq -r --arg cluster "$c" '.eks.value[$cluster].eks.endpoint'`
   config: |
     {
       "awsAuthConfig": {
         "clusterName": "`terraform output --json | jq -r --arg cluster "$c" '.eks.value[$cluster].eks.name'`",
-        "roleARN": "`terraform output --json | jq -r --arg cluster "$c" '.irsa_argocd.value[$cluster]'`"
+        "roleARN": "`terraform output --json | jq -r --arg cluster "$c" '.iam_argocd.value[$cluster]'`"
       },
       "tlsClientConfig": {
-        "insecure": true
+        "insecure": false,
+        "caData": "`terraform output --json | jq -r --arg cluster "$c" '.eks.value[$cluster].eks.certificate_authority[0].data'`"
       }
     }
 EOT
@@ -121,35 +111,15 @@ kubectl create secret generic license --context mgmt-2 \
 ```
 
 ### Create apps in argo
-
-kubectl apply --context mgmt-1 -f -<<EOT
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: ${c}-app-of-apps
-  namespace: argocd
-spec:
-  destination:
-    namespace: argocd
-    server: https://kubernetes.default.svc
-  project: default
-  source:
-    directory:
-      jsonnet: {}
-      recurse: true
-    path: argocd/ha-demo/mgmt-1
-    repoURL: https://github.com/bensolo-io/multi-region-demo.git
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true 
-EOT
+```bash
+kubectl apply -f argocd/ha-demo/_argocd-apps/ --context mgmt-1
+```
 
 
 <!-- 
 
 
-2. Install argo 
+1. Install argo 
 ```bash
 # mgmt-1
 kubectl create namespace argocd --context mgmt-1
