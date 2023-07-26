@@ -170,3 +170,25 @@ spec:
     path: argocd/ha-demo/_mgmt-common/ilm-istiod
     directory:
       recurse: true
+--- 
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mgmt-2-ilm-gateways
+  namespace: argocd
+spec:
+  destination:
+    namespace: gloo-mesh
+    name: mgmt-2
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  source:
+    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    path: argocd/ha-demo/_mgmt-common/ilm-gateways
+    directory:
+      recurse: true
