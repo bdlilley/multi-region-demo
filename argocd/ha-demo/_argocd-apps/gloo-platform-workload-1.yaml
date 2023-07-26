@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gloo-platform-crds
+  name: workload-1-gloo-platform-crds
   namespace: argocd
 spec:
   destination:
@@ -11,7 +11,7 @@ spec:
   project: default
   source:
     chart: gloo-platform-crds
-    repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
+    repoURL: https://storage.googleapis.com/gloo-platform/helm-charts #https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
     targetRevision: v2.4.0-rc1
   syncPolicy:
     automated:
@@ -23,7 +23,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gloo-platform
+  name: workload-1-gloo-platform
   namespace: argocd
 spec:
   destination:
@@ -38,7 +38,7 @@ spec:
     - CreateNamespace=false
   source:
     chart: gloo-platform
-    repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
+    repoURL: https://storage.googleapis.com/gloo-platform/helm-charts #https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
     targetRevision: v2.4.0-rc1
     helm:
       values: |
@@ -89,3 +89,25 @@ spec:
         redis:
           deployment:
             enabled: false
+--- 
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: workload-1-tls
+  namespace: argocd
+spec:
+  destination:
+    namespace: gloo-mesh
+    name: workload-1
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  source:
+    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    path: argocd/ha-demo/workload-1/tls
+    directory:
+      recurse: true

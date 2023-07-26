@@ -89,3 +89,25 @@ spec:
         redis:
           deployment:
             enabled: false
+--- 
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: workload-2-tls
+  namespace: argocd
+spec:
+  destination:
+    namespace: gloo-mesh
+    name: workload-2
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  source:
+    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    path: argocd/ha-demo/workload-2/tls
+    directory:
+      recurse: true
