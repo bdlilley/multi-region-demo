@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gloo-platform-crds
+  name: mgmt-1-gloo-platform-crds
   namespace: argocd
 spec:
   destination:
@@ -13,6 +13,8 @@ spec:
     chart: gloo-platform-crds
     repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
     targetRevision: v2.4.0-rc1
+    helm:
+      name: gloo-platform-crds
   syncPolicy:
     automated:
       prune: true
@@ -23,7 +25,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gloo-platform
+  name: mgmt-1-gloo-platform
   namespace: argocd
 spec:
   destination:
@@ -41,6 +43,7 @@ spec:
     repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
     targetRevision: v2.4.0-rc1
     helm:
+      name: gloo-platform
       values: |
         common:
           cluster: mgmt-cluster
