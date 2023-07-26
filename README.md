@@ -87,6 +87,8 @@ done
 ```bash
 kubectl create ns gloo-mesh  --context mgmt-1 
 kubectl create ns gloo-mesh  --context mgmt-2
+kubectl create ns gloo-mesh  --context workload-1 
+kubectl create ns gloo-mesh  --context workload-2
 
 # redis auth secrets for mgmt servers
 kubectl create secret generic redis-config --context mgmt-1 \
