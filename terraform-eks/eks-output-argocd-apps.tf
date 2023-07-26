@@ -51,5 +51,5 @@ resource "local_file" "argocd-ext-dns-yaml" {
     cluster-name     = each.value.cluster-name
     domain           = var.privateHzName
   })
-  filename = "${path.module}/../argocd/${var.resourcePrefix}/${each.key}/generated-ext-dns.yaml"
+  filename = "${path.module}/../argocd/${var.resourcePrefix}/${each.key}/external-dns/generated-ext-dns.yaml"
 }

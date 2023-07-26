@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gloo-platform-crds
+  name: mgmt-2-gloo-platform-crds
   namespace: argocd
 spec:
   destination:
@@ -11,8 +11,10 @@ spec:
   project: default
   source:
     chart: gloo-platform-crds
-    repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
+    repoURL: https://storage.googleapis.com/gloo-platform/helm-charts # https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
     targetRevision: v2.4.0-rc1
+    helm:
+      releaseName: gloo-platform-crds
   syncPolicy:
     automated:
       prune: true
@@ -23,7 +25,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gloo-platform
+  name: mgmt-2-gloo-platform
   namespace: argocd
 spec:
   destination:
@@ -38,9 +40,10 @@ spec:
     - CreateNamespace=false
   source:
     chart: gloo-platform
-    repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
+    repoURL: https://storage.googleapis.com/gloo-platform/helm-charts #https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
     targetRevision: v2.4.0-rc1
     helm:
+      releaseName: gloo-platform
       values: |
         common:
           cluster: mgmt-cluster
@@ -126,3 +129,47 @@ spec:
         global:
           common:
             cluster: mgmt-cluster
+--- 
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mgmt-2-gloo-mgmt-setup
+  namespace: argocd
+spec:
+  destination:
+    namespace: gloo-mesh
+    name: mgmt-2
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  source:
+    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    path: argocd/ha-demo/_mgmt-common/gloo-mgmt-setup
+    directory:
+      recurse: true
+--- 
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mgmt-2-ilm-istiod
+  namespace: argocd
+spec:
+  destination:
+    namespace: gloo-mesh
+    name: mgmt-2
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  source:
+    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    path: argocd/ha-demo/_mgmt-common/ilm-istiod
+    directory:
+      recurse: true
