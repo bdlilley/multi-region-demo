@@ -156,3 +156,51 @@ spec:
         global:
           common:
             cluster: mgmt-cluster
+--- 
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mgmt-1-gloo-mgmt-setup
+  namespace: argocd
+spec:
+  destination:
+    namespace: gloo-mesh
+    server: https://kubernetes.default.svc
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  source:
+    chart: gloo-platform
+    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    targetRevision: HEAD
+    path: argocd/ha-demo/_mgmt-common/gloo-mgmt-setup
+    directory:
+      recurse: true
+--- 
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mgmt-1-ilm-istiod
+  namespace: argocd
+spec:
+  destination:
+    namespace: gloo-mesh
+    server: https://kubernetes.default.svc
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  source:
+    chart: gloo-platform
+    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    targetRevision: HEAD
+    path: argocd/ha-demo/_mgmt-common/ilm-istiod
+    directory:
+      recurse: true
