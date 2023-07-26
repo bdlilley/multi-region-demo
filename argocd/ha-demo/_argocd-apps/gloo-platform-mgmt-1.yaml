@@ -14,7 +14,7 @@ spec:
     repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
     targetRevision: v2.4.0-rc1
     helm:
-      name: gloo-platform-crds
+      releaseName: gloo-platform-crds
   syncPolicy:
     automated:
       prune: true
@@ -43,7 +43,7 @@ spec:
     repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
     targetRevision: v2.4.0-rc1
     helm:
-      name: gloo-platform
+      releaseName: gloo-platform
       values: |
         common:
           cluster: mgmt-cluster
