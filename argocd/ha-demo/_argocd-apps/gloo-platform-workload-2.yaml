@@ -2,16 +2,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gloo-platform-crds
+  name: workload-2-gloo-platform-crds
   namespace: argocd
 spec:
   destination:
     namespace: gloo-mesh
-    name: mgmt-2
+    name: workload-2
   project: default
   source:
     chart: gloo-platform-crds
-    repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
+    repoURL: https://storage.googleapis.com/gloo-platform/helm-charts #https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
     targetRevision: v2.4.0-rc1
   syncPolicy:
     automated:
@@ -23,7 +23,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gloo-platform
+  name: workload-2-gloo-platform
   namespace: argocd
 spec:
   destination:
@@ -38,7 +38,7 @@ spec:
     - CreateNamespace=false
   source:
     chart: gloo-platform
-    repoURL: https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
+    repoURL: https://storage.googleapis.com/gloo-platform/helm-charts #https://storage.googleapis.com/gloo-platform-dev/platform-charts/helm-charts
     targetRevision: v2.4.0-rc1
     helm:
       values: |
