@@ -30,7 +30,7 @@ spec:
     syncOptions:
     - CreateNamespace=false
   destination:
-    server: https://kubernetes.default.svc
+    name: in-cluster
     namespace: kube-system  
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -61,7 +61,7 @@ spec:
     syncOptions:
     - CreateNamespace=false
   destination:
-    server: https://kubernetes.default.svc
+    name: in-cluster
     namespace: kube-system  
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -88,5 +88,5 @@ spec:
     syncOptions:
     - CreateNamespace=false
   destination:
-    server: https://kubernetes.default.svc
+    name: in-cluster
     namespace: kube-system  
