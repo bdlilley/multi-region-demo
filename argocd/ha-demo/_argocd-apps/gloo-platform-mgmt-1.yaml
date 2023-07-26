@@ -176,7 +176,6 @@ spec:
   source:
     chart: gloo-platform
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-    targetRevision: HEAD
     path: argocd/ha-demo/_mgmt-common/gloo-mgmt-setup
     directory:
       recurse: true
@@ -200,7 +199,6 @@ spec:
   source:
     chart: gloo-platform
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-    targetRevision: HEAD
     path: argocd/ha-demo/_mgmt-common/ilm-istiod
     directory:
       recurse: true
