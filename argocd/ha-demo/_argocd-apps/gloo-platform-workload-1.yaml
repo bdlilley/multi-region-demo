@@ -5,7 +5,7 @@ metadata:
   name: workload-1-gloo-platform-crds
   namespace: argocd
   labels:
-    solo.io/gloo-component: gloo-platform-crds
+    solo.io/gloo-component: gloo-platform
 spec:
   destination:
     namespace: gloo-mesh
