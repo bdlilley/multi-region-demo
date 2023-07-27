@@ -4,6 +4,8 @@ kind: Application
 metadata:
   name: mgmt-2-external-dns
   namespace: argocd
+  labels:
+    solo.io/infra: external-dns
 spec:
   destination:
     namespace: kube-system

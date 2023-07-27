@@ -5,6 +5,8 @@ kind: Application
 metadata:
   name: workload-2-aws-lb
   namespace: argocd
+  labels:
+    solo.io/infra: aws-load-balancer
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -37,6 +39,8 @@ kind: Application
 metadata:
   name: workload-2-ext-secrets
   namespace: argocd
+  labels:
+    solo.io/infra: external-secrets
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -67,6 +71,8 @@ kind: Application
 metadata:
   name: workload-2-cert-manager
   namespace: argocd
+  labels:
+    solo.io/infra: cert-manager
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:

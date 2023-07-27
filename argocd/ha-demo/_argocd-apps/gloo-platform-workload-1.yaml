@@ -4,6 +4,8 @@ kind: Application
 metadata:
   name: workload-1-gloo-platform-crds
   namespace: argocd
+  labels:
+    solo.io/gloo-component: management
 spec:
   destination:
     namespace: gloo-mesh
@@ -25,6 +27,8 @@ kind: Application
 metadata:
   name: workload-1-gloo-platform
   namespace: argocd
+  labels:
+    solo.io/gloo-component: management
 spec:
   destination:
     namespace: gloo-mesh
@@ -95,6 +99,8 @@ kind: Application
 metadata:
   name: workload-1-tls
   namespace: argocd
+  labels:
+    solo.io/gloo-component: management
 spec:
   destination:
     namespace: gloo-mesh

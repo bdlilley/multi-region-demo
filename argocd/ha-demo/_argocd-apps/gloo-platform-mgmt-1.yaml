@@ -4,6 +4,8 @@ kind: Application
 metadata:
   name: mgmt-1-gloo-platform-crds
   namespace: argocd
+  labels:
+    solo.io/gloo-component: management
 spec:
   destination:
     namespace: gloo-mesh
@@ -25,6 +27,8 @@ kind: Application
 metadata:
   name: mgmt-1-gloo-platform
   namespace: argocd
+  labels:
+    solo.io/gloo-component: management
 spec:
   destination:
     namespace: gloo-mesh
@@ -159,6 +163,8 @@ kind: Application
 metadata:
   name: mgmt-1-gloo-mgmt-setup
   namespace: argocd
+  labels:
+    solo.io/gloo-component: management
 spec:
   destination:
     namespace: gloo-mesh
@@ -181,6 +187,8 @@ kind: Application
 metadata:
   name: mgmt-1-ilm-istiod
   namespace: argocd
+  labels:
+    solo.io/gloo-component: istiod
 spec:
   destination:
     namespace: gloo-mesh
@@ -204,7 +212,7 @@ metadata:
   name: mgmt-1-ilm-gateways
   namespace: argocd
   labels:
-    solo.io/gloo-component: gateway
+    solo.io/gloo-component: istio-gateway
 spec:
   destination:
     namespace: gloo-mesh
