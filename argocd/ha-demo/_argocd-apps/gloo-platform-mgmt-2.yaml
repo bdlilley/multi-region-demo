@@ -5,7 +5,7 @@ metadata:
   name: mgmt-2-gloo-platform-crds
   namespace: argocd
   labels:
-    solo.io/gloo-component: management
+    solo.io/gloo-component: gloo-platform-crds
 spec:
   destination:
     namespace: gloo-mesh
@@ -28,7 +28,7 @@ metadata:
   name: mgmt-2-gloo-platform
   namespace: argocd
   labels:
-    solo.io/gloo-component: management
+    solo.io/gloo-component: gloo-platform
 spec:
   destination:
     namespace: gloo-mesh
@@ -137,7 +137,7 @@ metadata:
   name: mgmt-2-gloo-mgmt-setup
   namespace: argocd
   labels:
-    solo.io/gloo-component: management
+    solo.io/gloo-component: gloo-platform-setup
 spec:
   destination:
     namespace: gloo-mesh
