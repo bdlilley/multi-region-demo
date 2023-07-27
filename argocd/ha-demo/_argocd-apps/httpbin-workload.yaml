@@ -8,8 +8,33 @@ metadata:
     solo.io/demo: httpbin
 spec:
   destination:
-    namespace: kube-system
+    namespace: httpbin
     name: workload-1
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  source:
+    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    path: argocd/ha-demo/workload-demo
+    targetRevision: main
+    directory:
+      recurse: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: workload-2-httpbin
+  namespace: argocd
+  labels:
+    solo.io/demo: httpbin
+spec:
+  destination:
+    namespace: httpbin
+    name: workload-2
   project: default
   syncPolicy:
     automated:
