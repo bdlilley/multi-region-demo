@@ -152,6 +152,7 @@ spec:
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
     path: argocd/ha-demo/_mgmt-common/gloo-mgmt-setup
+    targetRevision: main
     directory:
       recurse: true
 --- 
@@ -176,6 +177,7 @@ spec:
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
     path: argocd/ha-demo/_mgmt-common/ilm-istiod
+    targetRevision: main
     directory:
       recurse: true
 --- 
@@ -200,5 +202,6 @@ spec:
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
     path: argocd/ha-demo/_mgmt-common/ilm-gateways
+    targetRevision: main
     directory:
       recurse: true
