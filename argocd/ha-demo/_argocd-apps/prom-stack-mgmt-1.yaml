@@ -15,6 +15,9 @@ spec:
       selfHeal: true 
     syncOptions:
     - CreateNamespace=false
+    - ApplyOutOfSyncOnly=true
+    - Replace=true
+    - ServerSideApply=true
   source:
     chart: kube-prometheus-stack
     repoURL: https://prometheus-community.github.io/helm-charts
