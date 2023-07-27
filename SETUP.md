@@ -2,7 +2,7 @@ Load testing
 
 https://k6.io/blog/running-distributed-tests-on-k8s/
 
-kubectl apply  -n default --context mgmt-1 -f -<<EOT
+kubectl apply  -n gloo-mesh --context mgmt-1 -f -<<EOT
 apiVersion: k6.io/v1alpha1
 kind: K6
 metadata:
@@ -16,7 +16,7 @@ spec:
       file: k6-test-script.js
 EOT
 
-kubectl apply  -n default --context mgmt-2 -f -<<EOT
+kubectl apply  -n gloo-mesh --context mgmt-2 -f -<<EOT
 apiVersion: k6.io/v1alpha1
 kind: K6
 metadata:
