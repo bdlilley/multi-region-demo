@@ -6,7 +6,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: gloo-mesh
+    namespace: monitoring
     server: https://kubernetes.default.svc
   project: default
   syncPolicy:
@@ -14,7 +14,7 @@ spec:
       prune: true
       selfHeal: true 
     syncOptions:
-    - CreateNamespace=false
+    - CreateNamespace=true
     - ApplyOutOfSyncOnly=true
     - Replace=true
     - ServerSideApply=true
