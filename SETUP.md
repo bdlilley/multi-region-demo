@@ -9,7 +9,7 @@ metadata:
   name: k6-demo
 spec:
   parallelism: 1
-  arguments: "--dns ttl=0,select=random,policy=onlyIPv4 --no-connection-reuse --no-vu-connection-reuse"
+  arguments: "--out json --dns ttl=0,select=random,policy=onlyIPv4 --no-connection-reuse --no-vu-connection-reuse"
   script:
     configMap:
       name: demo-stress-test
@@ -23,7 +23,7 @@ metadata:
   name: k6-demo
 spec:
   parallelism: 1
-  arguments: "--dns ttl=0,select=random,policy=onlyIPv4 --no-connection-reuse --no-vu-connection-reuse"
+  arguments: "--out json --dns ttl=0,select=random,policy=onlyIPv4 --no-connection-reuse --no-vu-connection-reuse"
   script:
     configMap:
       name: demo-stress-test
