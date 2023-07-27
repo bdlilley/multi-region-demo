@@ -20,5 +20,6 @@ spec:
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
     path: argocd/ha-demo/mgmt-2/external-dns
+    targetRevision: main
     directory:
       recurse: true
