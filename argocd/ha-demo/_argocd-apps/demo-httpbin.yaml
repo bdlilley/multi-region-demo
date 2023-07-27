@@ -9,7 +9,7 @@ metadata:
 spec:
   destination:
     namespace: gloo-mesh
-    name: mgmt-1
+    name: in-cluster
   project: default
   syncPolicy:
     automated:
