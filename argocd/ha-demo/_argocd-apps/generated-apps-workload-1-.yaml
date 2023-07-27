@@ -29,7 +29,7 @@ spec:
     syncOptions:
     - CreateNamespace=false
   destination:
-    name: workload-1
+    server: https://7C64B9DF9D91D7DD4F130D8C8AEC90D6.gr7.us-east-1.eks.amazonaws.com
     namespace: kube-system  
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -59,7 +59,7 @@ spec:
     syncOptions:
     - CreateNamespace=false
   destination:
-    name: workload-1
+    server: https://7C64B9DF9D91D7DD4F130D8C8AEC90D6.gr7.us-east-1.eks.amazonaws.com
     namespace: kube-system  
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -85,5 +85,5 @@ spec:
     syncOptions:
     - CreateNamespace=false
   destination:
-    name: workload-1
+    server: https://7C64B9DF9D91D7DD4F130D8C8AEC90D6.gr7.us-east-1.eks.amazonaws.com
     namespace: kube-system  

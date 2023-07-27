@@ -136,7 +136,7 @@ metadata:
 spec:
   destination:
     namespace: argocd
-    name: in-cluster
+    server: https://kubernetes.default.svc
   project: default
   source:
     directory:
@@ -159,7 +159,7 @@ metadata:
 spec:
   destination:
     namespace: argocd
-    name: in-cluster
+    server: https://kubernetes.default.svc
   project: default
   source:
     directory:
@@ -186,7 +186,7 @@ metadata:
 spec:
   destination:
     namespace: argocd
-    name: in-cluster
+    server: https://kubernetes.default.svc
   project: default
   source:
     directory:
@@ -209,7 +209,7 @@ metadata:
 spec:
   destination:
     namespace: argocd
-    name: in-cluster
+    server: https://kubernetes.default.svc
   project: default
   source:
     directory:
@@ -237,7 +237,7 @@ metadata:
 spec:
   destination:
     namespace: argocd
-    name: in-cluster
+    server: https://kubernetes.default.svc
   project: default
   source:
     directory:
@@ -264,7 +264,7 @@ metadata:
 spec:
   destination:
     namespace: argocd
-    name: in-cluster
+    server: https://kubernetes.default.svc
   project: default
   source:
     directory:

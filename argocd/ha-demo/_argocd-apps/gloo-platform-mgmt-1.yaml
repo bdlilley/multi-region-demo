@@ -7,7 +7,7 @@ metadata:
 spec:
   destination:
     namespace: gloo-mesh
-    name: in-cluster
+    server: https://kubernetes.default.svc
   project: default
   source:
     chart: gloo-platform-crds
@@ -28,7 +28,7 @@ metadata:
 spec:
   destination:
     namespace: gloo-mesh
-    name: in-cluster
+    server: https://kubernetes.default.svc
   project: default
   syncPolicy:
     automated:
@@ -162,7 +162,7 @@ metadata:
 spec:
   destination:
     namespace: gloo-mesh
-    name: in-cluster
+    server: https://kubernetes.default.svc
   project: default
   syncPolicy:
     automated:
@@ -184,7 +184,7 @@ metadata:
 spec:
   destination:
     namespace: gloo-mesh
-    name: in-cluster
+    server: https://kubernetes.default.svc
   project: default
   syncPolicy:
     automated:
@@ -203,10 +203,12 @@ kind: Application
 metadata:
   name: mgmt-1-ilm-gateways
   namespace: argocd
+  labels:
+    solo.io/gloo-component: gateway
 spec:
   destination:
     namespace: gloo-mesh
-    name: in-cluster
+    server: https://kubernetes.default.svc
   project: default
   syncPolicy:
     automated:
