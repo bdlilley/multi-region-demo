@@ -7,7 +7,7 @@ metadata:
 spec:
   destination:
     namespace: gloo-mesh
-    server: https://kubernetes.default.svc
+    name: in-cluster
   project: default
   source:
     chart: gloo-platform-crds
@@ -28,7 +28,7 @@ metadata:
 spec:
   destination:
     namespace: gloo-mesh
-    server: https://kubernetes.default.svc
+    name: in-cluster
   project: default
   syncPolicy:
     automated:
@@ -162,7 +162,7 @@ metadata:
 spec:
   destination:
     namespace: gloo-mesh
-    server: https://kubernetes.default.svc
+    name: in-cluster
   project: default
   syncPolicy:
     automated:
@@ -184,7 +184,7 @@ metadata:
 spec:
   destination:
     namespace: gloo-mesh
-    server: https://kubernetes.default.svc
+    name: in-cluster
   project: default
   syncPolicy:
     automated:
@@ -206,7 +206,7 @@ metadata:
 spec:
   destination:
     namespace: gloo-mesh
-    server: https://kubernetes.default.svc
+    name: in-cluster
   project: default
   syncPolicy:
     automated:
