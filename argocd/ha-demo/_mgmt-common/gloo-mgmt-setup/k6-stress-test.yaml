@@ -24,7 +24,7 @@ data:
     };
 
     export default function () {
-      const result = http.get('http://api.ha-demo.vpc/demo');
+      const result = http.get('http://api.ha-demo.vpc/demo/ip');
       check(result, {
         'http response status code is 200': result.status === 200,
       });
