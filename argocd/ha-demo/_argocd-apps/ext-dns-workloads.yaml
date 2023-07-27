@@ -1,0 +1,50 @@
+--- 
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: workload-1-external-dns
+  namespace: argocd
+  labels:
+    solo.io/infra: external-dns
+spec:
+  destination:
+    namespace: kube-system
+    name: workload-1
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  source:
+    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    path: argocd/ha-demo/workload-1/external-dns
+    targetRevision: main
+    directory:
+      recurse: true
+--- 
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: workload-2-external-dns
+  namespace: argocd
+  labels:
+    solo.io/infra: external-dns
+spec:
+  destination:
+    namespace: kube-system
+    name: workload-2
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=false
+  source:
+    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    path: argocd/ha-demo/workload-2/external-dns
+    targetRevision: main
+    directory:
+      recurse: true
