@@ -20,15 +20,6 @@ spec:
       directResponse:
         status: 200
         body: "it's alive"
-    - name: new-route
-      matchers:
-        - uri:
-            prefix: /new-route
-      labels:
-        route: new-route
-      directResponse:
-        status: 200
-        body: "it's a new-route!"
     - name: demo
       matchers:
       - uri:
@@ -37,8 +28,8 @@ spec:
         pathRewrite: /
         destinations:
           - ref:
-              name: demo
+              name: httpbin
             kind: VIRTUAL_DESTINATION
             port:
-              number: 8080
+              number: 80
 

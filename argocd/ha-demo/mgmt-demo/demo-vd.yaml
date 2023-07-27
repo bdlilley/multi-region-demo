@@ -2,17 +2,17 @@
 apiVersion: networking.gloo.solo.io/v2
 kind: VirtualDestination
 metadata:
-  name: demo
+  name: httpbin
   namespace: gloo-mesh
 spec:
   hosts:
   # Arbitrary, internal-only hostname assigned to the endpoint
-  - demo.mesh.internal.com
+  - httpbin.mesh.internal.com
   ports:
-  - number: 8080
+  - number: 80
     protocol: HTTP
     targetPort:
-      number: 8080
+      number: 80
   services:
     - labels:
         app: demo
