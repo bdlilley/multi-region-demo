@@ -89,8 +89,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
-        "w": 16,
+        "h": 14,
+        "w": 24,
         "x": 0,
         "y": 0
       },
@@ -140,11 +140,13 @@
             "type": "prometheus",
             "uid": "PC80848E498D38F97"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (istio_io_rev) (rate(istio_requests_total{response_code!=\"200\"}[1m]))",
+          "expr": "sum by (istio_io_rev) (rate(istio_requests_total{response_code!=\"200\"}[1m])) or vector(0)",
           "hide": false,
           "interval": "",
           "legendFormat": "errors",
+          "range": true,
           "refId": "C"
         }
       ],

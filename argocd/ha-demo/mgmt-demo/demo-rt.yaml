@@ -6,7 +6,7 @@ metadata:
   namespace: gloo-mesh
 spec:
   hosts:
-    - '*'
+    - 'api.ha-demo.vpc'
   virtualGateways:
     - name: default
       namespace: gloo-mesh
