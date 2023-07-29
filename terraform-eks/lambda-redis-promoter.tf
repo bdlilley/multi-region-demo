@@ -61,7 +61,7 @@ resource "aws_iam_role_policy" "redis-promoter-us-east-1" {
       {
         "Action": [
           "route53:List*",
-          "elasticache:Describe*"
+          "elasticache:*"
         ],
         "Effect": "Allow",
         "Resource": "*"
@@ -166,7 +166,7 @@ resource "aws_iam_role_policy" "redis-promoter-us-east-2" {
       {
         "Action": [
           "route53:List*",
-          "elasticache:Describe*"
+          "elasticache:*"
         ],
         "Effect": "Allow",
         "Resource": "*"
