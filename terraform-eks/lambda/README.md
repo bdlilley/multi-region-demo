@@ -1,0 +1,1 @@
+The source code for the zipped binary is available at https://github.com/bdlilley/aws-global-elasticache-promoter.
