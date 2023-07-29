@@ -11,6 +11,15 @@ spec:
     - name: default
       namespace: gloo-mesh
   http:
+    - name: foo
+      matchers:
+        - uri:
+            prefix: /foo
+      labels:
+        route: foo
+      directResponse:
+        status: 200
+        body: "this is foo route"
     - name: sanity
       matchers:
         - uri:
