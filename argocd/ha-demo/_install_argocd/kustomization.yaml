@@ -3,17 +3,6 @@ kind: Kustomization
 namespace: argocd
 resources:
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.9/manifests/install.yaml
-patches:
-  - path: ./argocd-cm-okta.yaml
-    target:
-      kind: ConfigMap
-      version: v1
-      name: argocd-cm
-  - path: ./argocd-rbac.yaml
-    target:
-      kind: ConfigMap
-      version: v1
-      name: argocd-rbac-cm
 patchesJson6902:
   - target:
       kind: ServiceAccount
@@ -63,4 +52,3 @@ patchesJson6902:
       - op: add
         path: /spec/template/spec/securityContext
         value: { "fsGroup": 999 }
-

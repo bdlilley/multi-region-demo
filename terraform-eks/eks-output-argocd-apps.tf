@@ -2,25 +2,25 @@ locals {
   allClusters = {
     "mgmt-1" : {
       "cluster-name" : "${var.resourcePrefix}-mgmt-1",
-      "destination-name": "in-cluster",
+      "destination-name" : "in-cluster",
       "destination-server" : "https://kubernetes.default.svc",
       "region" : "us-east-1",
     }
     "mgmt-2" : {
       "cluster-name" : "${var.resourcePrefix}-mgmt-2",
-      "destination-name": "mgmt-2",
+      "destination-name" : "mgmt-2",
       "destination-server" : "${module.eks-mgmt-2.eks.endpoint}",
       "region" : "us-east-2",
     }
     "workload-1" : {
       "cluster-name" : "${var.resourcePrefix}-workload-1",
-      "destination-name": "workload-1",
+      "destination-name" : "workload-1",
       "destination-server" : "${module.eks-workload-1.eks.endpoint}",
       "region" : "us-east-1",
     }
     "workload-2" : {
       "cluster-name" : "${var.resourcePrefix}-workload-2",
-      "destination-name": "workload-2",
+      "destination-name" : "workload-2",
       "destination-server" : "${module.eks-workload-2.eks.endpoint}",
       "region" : "us-east-2",
     }
@@ -37,7 +37,7 @@ resource "local_file" "argocd-app-yaml" {
     cluster-name               = each.value.cluster-name
     cluster-name-short         = each.key
     destination-server         = each.value.destination-server
-    destination-name = each.value.destination-name
+    destination-name           = each.value.destination-name
   })
   filename = "${path.module}/../argocd/${var.resourcePrefix}/_argocd-apps/generated-apps-${each.key}-.yaml"
 }
