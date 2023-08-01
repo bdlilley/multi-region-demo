@@ -3,9 +3,9 @@
 clusters=("mgmt-1" "mgmt-2" "workload-1" "workload-2")
 for c in ${clusters[@]}; do
    kubectl scale deployment argocd-server -n argocd --replicas=0 --context ${c}
-   kubectl delete iop -A --all --context ${c} --wait=false
    kubectl delete ilm -A --all --context ${c} --wait=false
    kubectl delete glm -A --all --context ${c} --wait=false
+   kubectl delete iop -A --all --context ${c} --wait=false
    kubectl delete svc -A --all --context ${c} --wait=false
 done
 
