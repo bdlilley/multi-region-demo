@@ -39,7 +39,7 @@ resource "local_file" "argocd-app-yaml" {
     destination-server         = each.value.destination-server
     destination-name           = each.value.destination-name
   })
-  filename = "${path.module}/../argocd/${var.resourcePrefix}/_argocd-apps/generated-apps-${each.key}-.yaml"
+  filename = "${path.module}/../argocd/_argocd-apps/generated-apps-${each.key}-.yaml"
 }
 
 resource "local_file" "argocd-ext-dns-yaml" {
@@ -51,5 +51,5 @@ resource "local_file" "argocd-ext-dns-yaml" {
     cluster-name     = each.value.cluster-name
     domain           = var.privateHzName
   })
-  filename = "${path.module}/../argocd/${var.resourcePrefix}/${each.key}/external-dns/generated-ext-dns.yaml"
+  filename = "${path.module}/../argocd/${each.key}/external-dns/generated-ext-dns.yaml"
 }

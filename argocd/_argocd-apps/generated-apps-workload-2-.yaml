@@ -31,7 +31,7 @@ spec:
     syncOptions:
     - CreateNamespace=false
   destination:
-    server: https://D89FEE180045E82411F9A68BA27575F4.yl4.us-east-2.eks.amazonaws.com
+    server: https://205FBDC662877FA5BDB96563A1252DC1.gr7.us-east-2.eks.amazonaws.com
     namespace: kube-system  
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -63,7 +63,7 @@ spec:
     syncOptions:
     - CreateNamespace=false
   destination:
-    server: https://D89FEE180045E82411F9A68BA27575F4.yl4.us-east-2.eks.amazonaws.com
+    server: https://205FBDC662877FA5BDB96563A1252DC1.gr7.us-east-2.eks.amazonaws.com
     namespace: kube-system  
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -91,5 +91,5 @@ spec:
     syncOptions:
     - CreateNamespace=false
   destination:
-    server: https://D89FEE180045E82411F9A68BA27575F4.yl4.us-east-2.eks.amazonaws.com
+    server: https://205FBDC662877FA5BDB96563A1252DC1.gr7.us-east-2.eks.amazonaws.com
     namespace: kube-system  
