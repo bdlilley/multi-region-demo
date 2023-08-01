@@ -7,10 +7,10 @@
 
 **Deploy AWS Resources**
 
-1. Fork and clone this repo.  You'll want to point ArgoCD to your own fork!
-2. Review / edit [../terraform-values/common.tfvars](../terraform-values/common.tfvars).  You only need to modify this file if you want to use different regions or network configurations.
-3. Review / edit [../terraform-values/my-demo.tfvars](../terraform-values/my-demo.tfvars) 
-4. Init Terraform
+1. Review / edit [../terraform-values/common.tfvars](../terraform-values/common.tfvars).  You only need to modify this file if you want to use different regions or network configurations.
+2. Review / edit [../terraform-values/my-demo.tfvars](../terraform-values/my-demo.tfvars).
+3. Review / edit Kustomize patches in [../argocd/_install_argocd/](../argocd/_install_argocd/); you can opt-out of Okta RBAC but must keep the IAM for pods configuration to allow ArgoCD to manage remote clusters.
+4. Deploy resources
 ```bash
 cd terraform-eks
 
@@ -20,6 +20,8 @@ export TF_VAR_FILE="my-demo.tfvars"
 export TF_STATE_BUCKET=YOUR-BUCKET-NAME
 export TF_STATE_KEY=ha-demo
 export TF_STATE_REGION=us-east-1
+# set this to change redis auth secret
+TF_VAR_redis_auth=s0l0-123!
 
 ./init.sh
 
@@ -37,10 +39,9 @@ export TF_STATE_REGION=us-east-1
   kubectl config rename-context arn:aws:eks:us-east-1:931713665590:cluster/ha-demo-workload-1 workload-1
   aws eks update-kubeconfig --name ha-demo-workload-2 --region us-east-2
   kubectl config rename-context arn:aws:eks:us-east-2:931713665590:cluster/ha-demo-workload-2 workload-2
-  ```
+```
   
-**Register Clusters w/ ArgoCD**
-
+**Register All Clusters w/ ArgoCD**
 
 ```bash
 # patch aws-auth to allow argocd remote management
@@ -90,12 +91,12 @@ done
 
 
 ```bash
-kubectl create ns gloo-mesh  --context mgmt-1 
-kubectl create ns gloo-mesh  --context mgmt-2
-kubectl create ns gloo-mesh  --context workload-1 
-kubectl create ns gloo-mesh  --context workload-2
+clusters=("mgmt-1" "mgmt-2" "workload-1" "workload-2")
+for c in ${clusters[@]}; do
+  kubectl create ns gloo-mesh  --context ${c} 
+done
 
-# redis auth secrets for mgmt servers
+# redis auth and gloo license secrets
 kubectl create secret generic redis-config --context mgmt-1 \
   --namespace gloo-mesh \
   --from-literal=token="${TF_VAR_redis_auth}" \
@@ -107,7 +108,6 @@ kubectl create secret generic redis-config --context mgmt-2 \
   --from-literal=host="`terraform output --json | jq -r '."redis-secondary-us-east-2".value.host'`"
 
 # gloo license secrets
-
 kubectl create secret generic license --context mgmt-1 \
   --namespace gloo-mesh \
   --from-literal=gloo-trial-license-key=${LICENSE_KEY}
@@ -115,4 +115,21 @@ kubectl create secret generic license --context mgmt-1 \
 kubectl create secret generic license --context mgmt-2 \
   --namespace gloo-mesh \
   --from-literal=gloo-trial-license-key=${LICENSE_KEY}
+```
+
+**Deploy Apps w/ ArgoCD**
+
+***optional - change static app values***
+
+The [../argocd/_argocd-apps/](../argocd/_argocd-apps/) folder contains several static app definitions that refer to this repo (`repoURL: https://github.com/bensolo-io/multi-region-demo.git`).
+
+You may wish to change some of these values.  For example, [../argocd/_argocd-apps/gloo-platform-mgmt-1.yaml](../argocd/_argocd-apps/gloo-platform-mgmt-1.yaml) contains the Gloo Platform deployment for `v2.4.0`.  To use your own values:
+
+1. Fork this repo and make the changes you desire
+2. Find and replace `repoURL: https://github.com/bensolo-io/multi-region-demo.git` with your own repo URL.  
+
+**create apps**
+
+```bash
+kubectl apply -f ../argocd/_argocd-apps/ --context mgmt-1
 ```

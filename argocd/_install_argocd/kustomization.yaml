@@ -3,6 +3,15 @@ kind: Kustomization
 namespace: argocd
 resources:
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.9/manifests/install.yaml
+patches:
+  - target:
+      kind: ConfigMap
+      name: argocd-cm
+    path: argocd-cm-okta.yaml
+  - target:
+      kind: ConfigMap
+      name: argocd-rbac-cm
+    path: argocd-rbac.yaml
 patchesJson6902:
   - target:
       kind: ServiceAccount
