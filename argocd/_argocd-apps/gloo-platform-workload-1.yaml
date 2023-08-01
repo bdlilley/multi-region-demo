@@ -114,7 +114,7 @@ spec:
     - CreateNamespace=false
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-    path: argocd/ha-demo/workload-1/tls
+    path: argocd/workload-1/tls
     targetRevision: main
     directory:
       recurse: true

@@ -19,7 +19,7 @@ spec:
     - CreateNamespace=false
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-    path: argocd/ha-demo/workload-1/external-dns
+    path: argocd/workload-1/external-dns
     targetRevision: main
     directory:
       recurse: true
@@ -44,7 +44,7 @@ spec:
     - CreateNamespace=false
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-    path: argocd/ha-demo/workload-2/external-dns
+    path: argocd/workload-2/external-dns
     targetRevision: main
     directory:
       recurse: true

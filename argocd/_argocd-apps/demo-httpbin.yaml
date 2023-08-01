@@ -19,7 +19,7 @@ spec:
     - CreateNamespace=false
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-    path: argocd/ha-demo/mgmt-demo
+    path: argocd/mgmt-demo
     targetRevision: main
     directory:
       recurse: true
@@ -44,7 +44,7 @@ spec:
     - CreateNamespace=false
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-    path: argocd/ha-demo/mgmt-demo
+    path: argocd/mgmt-demo
     targetRevision: main
     directory:
       recurse: true
@@ -69,7 +69,7 @@ spec:
     - CreateNamespace=false
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-    path: argocd/ha-demo/workload-demo
+    path: argocd/workload-demo
     targetRevision: main
     directory:
       recurse: true
@@ -94,7 +94,7 @@ spec:
     - CreateNamespace=false
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-    path: argocd/ha-demo/workload-demo
+    path: argocd/workload-demo
     targetRevision: main
     directory:
       recurse: true

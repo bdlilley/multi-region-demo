@@ -178,7 +178,7 @@ spec:
     - CreateNamespace=false
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-    path: argocd/ha-demo/_mgmt-common/gloo-mgmt-setup
+    path: argocd/_mgmt-common/gloo-mgmt-setup
     targetRevision: main
     directory:
       recurse: true
@@ -203,7 +203,7 @@ spec:
     - CreateNamespace=false
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-    path: argocd/ha-demo/_mgmt-common/ilm-istiod
+    path: argocd/_mgmt-common/ilm-istiod
     targetRevision: main
     directory:
       recurse: true
@@ -228,7 +228,7 @@ spec:
     - CreateNamespace=false
   source:
     repoURL: https://github.com/bensolo-io/multi-region-demo.git
-    path: argocd/ha-demo/_mgmt-common/ilm-gateways
+    path: argocd/_mgmt-common/ilm-gateways
     targetRevision: main
     directory:
       recurse: true

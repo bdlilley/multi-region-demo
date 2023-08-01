@@ -89,7 +89,6 @@ done
 
 **Secrets**
 
-
 ```bash
 clusters=("mgmt-1" "mgmt-2" "workload-1" "workload-2")
 for c in ${clusters[@]}; do
@@ -132,4 +131,10 @@ You may wish to change some of these values.  For example, [../argocd/_argocd-ap
 
 ```bash
 kubectl apply -f ../argocd/_argocd-apps/ --context mgmt-1
+```
+
+# Cleanup
+
+```bash
+./destroy.sh
 ```
