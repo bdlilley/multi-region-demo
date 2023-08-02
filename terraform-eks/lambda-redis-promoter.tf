@@ -11,11 +11,8 @@ resource "aws_lambda_function" "redis-promoter-us-east-1" {
   source_code_hash = filebase64sha256("${path.module}/lambda/aws-global-elasticache-promoter.zip")
 
   vpc_config {
-    subnet_ids = [for sn in module.vpc-us-east-1.privateSubnets : sn.id]
-    security_group_ids = [
-      module.vpc-us-east-1.commonSecurityGroup.id,
-      module.vpc-us-east-1.interfaceSecurityGroup.id,
-    ]
+    subnet_ids         = [for sn in module.vpc-us-east-1.privateSubnets : sn.id]
+    security_group_ids = [aws_security_group.common-us-east-1.id]
   }
 
   environment {
@@ -115,11 +112,8 @@ resource "aws_lambda_function" "redis-promoter-us-east-2" {
   source_code_hash = filebase64sha256("${path.module}/lambda/aws-global-elasticache-promoter.zip")
 
   vpc_config {
-    subnet_ids = [for sn in module.vpc-us-east-2.privateSubnets : sn.id]
-    security_group_ids = [
-      module.vpc-us-east-2.commonSecurityGroup.id,
-      module.vpc-us-east-2.interfaceSecurityGroup.id,
-    ]
+    subnet_ids         = [for sn in module.vpc-us-east-2.privateSubnets : sn.id]
+    security_group_ids = [aws_security_group.common-us-east-2.id]
   }
 
   environment {

@@ -5,13 +5,10 @@ locals {
     max_size        = 4
     desired_size    = 1
     instance_types  = ["m5.2xlarge"]
-    commonClusterSg = module.vpc-us-east-1.commonSecurityGroup.id
+    commonClusterSg = aws_security_group.common-us-east-1.id
   }
-  eks-mgmt-1-subnetIds = [for sn in module.vpc-us-east-1.privateSubnets : sn.id]
-  eks-mgmt-1-securityGroupIds = [
-    module.vpc-us-east-1.commonSecurityGroup.id,
-    module.vpc-us-east-1.interfaceSecurityGroup.id,
-  ]
+  eks-mgmt-1-subnetIds        = [for sn in module.vpc-us-east-1.privateSubnets : sn.id]
+  eks-mgmt-1-securityGroupIds = [aws_security_group.common-us-east-1.id]
 }
 
 module "eks-mgmt-1" {
