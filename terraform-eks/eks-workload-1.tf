@@ -18,7 +18,7 @@ module "eks-workload-1" {
   providers = {
     aws = aws.us-east-1
   }
-  source         = "git::https://github.com/bensolo-io/cloud-gitops-examples.git//terraform/_submodules/eks-simple?ref=main"
+  source         = "git::https://github.com/bdlilley/cloud-gitops-examples.git//terraform-modules/eks-simple?ref=main"
   resourcePrefix = var.resourcePrefix
   tags           = var.tags
 

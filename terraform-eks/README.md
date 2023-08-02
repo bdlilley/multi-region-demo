@@ -120,12 +120,12 @@ kubectl create secret generic license --context mgmt-2 \
 
 ***optional - change static app values***
 
-The [../argocd/_argocd-apps/](../argocd/_argocd-apps/) folder contains several static app definitions that refer to this repo (`repoURL: https://github.com/bensolo-io/multi-region-demo.git`).
+The [../argocd/_argocd-apps/](../argocd/_argocd-apps/) folder contains several static app definitions that refer to this repo (`repoURL: https://github.com/bdlilley/multi-region-demo.git`).
 
 You may wish to change some of these values.  For example, [../argocd/_argocd-apps/gloo-platform-mgmt-1.yaml](../argocd/_argocd-apps/gloo-platform-mgmt-1.yaml) contains the Gloo Platform deployment for `v2.4.0`.  To use your own values:
 
 1. Fork this repo and make the changes you desire
-2. Find and replace `repoURL: https://github.com/bensolo-io/multi-region-demo.git` with your own repo URL.  
+2. Find and replace `repoURL: https://github.com/bdlilley/multi-region-demo.git` with your own repo URL.  
 
 **create apps**
 

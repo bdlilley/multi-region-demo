@@ -18,7 +18,7 @@ spec:
     syncOptions:
     - CreateNamespace=false
   source:
-    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    repoURL: https://github.com/bdlilley/multi-region-demo.git
     path: argocd/mgmt-2/external-dns
     targetRevision: main
     directory:

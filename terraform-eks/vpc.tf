@@ -1,7 +1,7 @@
 
 
 module "vpc-us-east-1" {
-  source           = "git::https://github.com/bensolo-io/cloud-gitops-examples.git//terraform/_submodules/vpc-simple?ref=main"
+  source           = "git::https://github.com/bdlilley/cloud-gitops-examples.git//terraform-modules/vpc-simple?ref=main"
   vpcConfig        = var.vpcConfigs["us-east-1"]
   resourcePrefix   = var.resourcePrefix
   tags             = var.tags
@@ -13,7 +13,7 @@ module "vpc-us-east-1" {
 }
 
 module "vpc-us-east-2" {
-  source           = "git::https://github.com/bensolo-io/cloud-gitops-examples.git//terraform/_submodules/vpc-simple?ref=main"
+  source           = "git::https://github.com/bdlilley/cloud-gitops-examples.git//terraform-modules/vpc-simple?ref=main"
   vpcConfig        = var.vpcConfigs["us-east-2"]
   resourcePrefix   = var.resourcePrefix
   tags             = var.tags

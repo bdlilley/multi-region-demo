@@ -177,7 +177,7 @@ spec:
     syncOptions:
     - CreateNamespace=false
   source:
-    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    repoURL: https://github.com/bdlilley/multi-region-demo.git
     path: argocd/_mgmt-common/gloo-mgmt-setup
     targetRevision: main
     directory:
@@ -202,7 +202,7 @@ spec:
     syncOptions:
     - CreateNamespace=false
   source:
-    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    repoURL: https://github.com/bdlilley/multi-region-demo.git
     path: argocd/_mgmt-common/ilm-istiod
     targetRevision: main
     directory:
@@ -227,7 +227,7 @@ spec:
     syncOptions:
     - CreateNamespace=false
   source:
-    repoURL: https://github.com/bensolo-io/multi-region-demo.git
+    repoURL: https://github.com/bdlilley/multi-region-demo.git
     path: argocd/_mgmt-common/ilm-gateways
     targetRevision: main
     directory:
