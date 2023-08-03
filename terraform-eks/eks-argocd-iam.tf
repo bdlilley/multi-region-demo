@@ -107,39 +107,6 @@ resource "aws_iam_role" "argocd-workload-2" {
 EOF
 }
 
-
-# module "irsa-argocd-mgmt-1" {
-#   source                       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-#   create_role                  = true
-#   role_name                    = "${var.resourcePrefix}-mgmt-1-argocd"
-#   provider_url                 = replace(module.eks-mgmt-1.eks.identity[0].oidc[0].issuer, "https://", "")
-#   oidc_subjects_with_wildcards = ["system:serviceaccount:argocd:argocd-*"]
-# }
-
-# module "irsa-argocd-mgmt-2" {
-#   source                       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-#   create_role                  = true
-#   role_name                    = "${var.resourcePrefix}-mgmt-2-argocd"
-#   provider_url                 = replace(module.eks-mgmt-1.eks.identity[0].oidc[0].issuer, "https://", "")
-#   oidc_subjects_with_wildcards = ["system:serviceaccount:argocd:argocd-*"]
-# }
-
-# module "irsa-argocd-workload-1" {
-#   source                       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-#   create_role                  = true
-#   role_name                    = "${var.resourcePrefix}-workload-1-argocd"
-#   provider_url                 = replace(module.eks-mgmt-1.eks.identity[0].oidc[0].issuer, "https://", "")
-#   oidc_subjects_with_wildcards = ["system:serviceaccount:argocd:argocd-*"]
-# }
-
-# module "irsa-argocd-workload-2" {
-#   source                       = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-#   create_role                  = true
-#   role_name                    = "${var.resourcePrefix}-workload-2-argocd"
-#   provider_url                 = replace(module.eks-mgmt-1.eks.identity[0].oidc[0].issuer, "https://", "")
-#   oidc_subjects_with_wildcards = ["system:serviceaccount:argocd:argocd-*"]
-# }
-
 output "iam_argocd" {
   value = {
     "mgmt-2"     = aws_iam_role.argocd-mgmt-2.arn
